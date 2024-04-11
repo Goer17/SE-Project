@@ -15,3 +15,18 @@ chmod +x build.sh
 ```shell
 ./build.sh
 ```
+
+
+#### Test
+
+```shell
+cd src/test
+```
+
+```shell
+chmod +x test.sh
+```
+
+```shell
+./test.sh
+```

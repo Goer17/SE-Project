@@ -1,0 +1,49 @@
+package com.virtual_bank.core;
+
+import java.util.UUID;
+
+public class User {
+    private String uid;
+    private String name;
+    private String passwd;
+    private int money;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPasswd() {
+        return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public User(String name, String passwd, int money) {
+        setUid(UUID.randomUUID().toString());
+        setName(name);
+        setPasswd(passwd);
+        setMoney(money);
+    }
+}
