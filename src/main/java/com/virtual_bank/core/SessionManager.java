@@ -3,6 +3,7 @@ package com.virtual_bank.core;
 public class SessionManager {
     private static SessionManager instance = null;
     private boolean loggedIn = false;
+    private String uid;
     private String username;
 
     private SessionManager() {}
@@ -18,7 +19,8 @@ public class SessionManager {
         return loggedIn;
     }
 
-    public void login(String username) {
+    public void login(String uid, String username) {
+        this.uid = uid;
         this.username = username;
         this.loggedIn = true;
     }
@@ -28,7 +30,11 @@ public class SessionManager {
         this.loggedIn = false;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
     public String getUsername() {
         return username;
-    }
+    }    
 }

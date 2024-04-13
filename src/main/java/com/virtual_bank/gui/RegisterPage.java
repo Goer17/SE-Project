@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import com.virtual_bank.core.SessionManager;
 import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
 
@@ -15,40 +14,46 @@ public class RegisterPage extends JPanel {
     private JButton registerButton;
     private JLabel messageLabel;
 
-    public RegisterPage(SessionManager sessionManager) {
+    public RegisterPage(BaseFrame baseFrame) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         panel.add(new JLabel("Username:"));
-        usernameField = new JTextField(20);
+        this.usernameField = new JTextField(20);
         panel.add(usernameField);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
 
         panel.add(new JLabel("Password:"));
-        passwordField = new JPasswordField(20);
+        this.passwordField = new JPasswordField(20);
         panel.add(passwordField);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        messageLabel = new JLabel();
+        this.messageLabel = new JLabel();
         panel.add(messageLabel);
-        panel.add(Box.createRigidArea(new Dimension(0, 5))); // 添加间隔
+        panel.add(Box.createRigidArea(new Dimension(0, 5)));
 
-        registerButton = new JButton("Register");
-        registerButton.addActionListener(new ActionListener() {
+        this.registerButton = new JButton("Register");
+        this.registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
-                User user = new User(username, password, 0);
+                if (password.length() < 6) {
+                    messageLabel.setText("Your password should contain at least 6 characters.");
+                    return;
+                }
+
+                User user = new User("#new", username, password, 0);
 
                 boolean success = XMLDBManager.addUser(user);
 
                 if (success) {
-                    messageLabel.setText("Registration successful.");
-                    // TODO
+                    messageLabel.setText("Successfull register.");
+                    baseFrame.sessionManager.login(user.getUid(), user.getName());
+                    baseFrame.refresh();
                 } else {
-                    messageLabel.setText("Registration failed. Please try again.");
+                    messageLabel.setText("Your username is duplicate. Please try another one.");
                 }
             }
         });

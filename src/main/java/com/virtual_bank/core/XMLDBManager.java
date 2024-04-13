@@ -52,6 +52,10 @@ public class XMLDBManager {
             Node userNode = userList.item(i);
             if (userNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element userElement = (Element)userNode;
+                String userElementName = userElement.getElementsByTagName("name").item(0).getTextContent();
+                if (name.equals(userElementName)) {
+                    return false;
+                }
                 if (uid.equals(userElement.getAttribute("uid"))) {
                     // If the UID is duplicated, the original record is overwritten
                     userElement.getElementsByTagName("name").item(0).setTextContent(name);
@@ -83,5 +87,26 @@ public class XMLDBManager {
         saveXML(doc, path);
 
         return true;
+    }
+
+    public static User findUser(String username) {
+        String path = "../db/users.xml";
+        Document doc = readXML(path); 
+
+        NodeList userList = doc.getElementsByTagName("user");
+        for (int i = 0; i < userList.getLength(); i++) {
+            Node userNode = userList.item(i);
+            if (userNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element userElement = (Element)userNode;
+                if (username.equals(userElement.getElementsByTagName("name").item(0).getTextContent())) {
+                    String uid = userElement.getAttribute("uid");
+                    String passwd = userElement.getElementsByTagName("passwd").item(0).getTextContent();
+                    int money = Integer.parseInt(userElement.getElementsByTagName("money").item(0).getTextContent());
+                    return new User(uid, username, passwd, money);
+                }
+            }
+        }
+
+        return null; // Not found
     }
 }

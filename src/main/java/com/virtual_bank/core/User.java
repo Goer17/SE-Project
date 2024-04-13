@@ -40,10 +40,15 @@ public class User {
         this.money = money;
     }
 
-    public User(String name, String passwd, int money) {
-        setUid(UUID.randomUUID().toString());
-        setName(name);
-        setPasswd(passwd);
-        setMoney(money);
+    public User(String uid, String name, String passwd, int money) {
+        if ("#new".equals(uid)) {
+            this.setUid(UUID.randomUUID().toString()); // New user
+        }
+        else {
+            this.setUid(uid);
+        }
+        this.setName(name);
+        this.setPasswd(passwd);
+        this.setMoney(money);
     }
 }

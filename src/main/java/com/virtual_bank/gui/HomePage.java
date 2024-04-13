@@ -4,11 +4,13 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
-import com.virtual_bank.core.SessionManager;
-
 public class HomePage extends JPanel {
-    public HomePage(SessionManager sessionManager) {
-        this.add(new JLabel("Home Page"), BorderLayout.CENTER);
-        // TODO
+    public HomePage(BaseFrame baseFrame) {
+        if (baseFrame.sessionManager.isLoggedIn()) {
+            this.add(new JLabel("Hello, " + baseFrame.sessionManager.getUsername() + "."), BorderLayout.CENTER);
+        }
+        else {
+            this.add(new JLabel("Please login first"), BorderLayout.CENTER); 
+        }
     }
 }

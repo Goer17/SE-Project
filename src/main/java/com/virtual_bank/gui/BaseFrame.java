@@ -41,6 +41,9 @@ public class BaseFrame extends JFrame implements ActionListener {
             this.addNavigationButton("Login");
             this.addNavigationButton("Register");
         }
+        else {
+            this.addNavigationButton("Logout");
+        }
         this.add(navigationPanel, BorderLayout.NORTH);
     }
 
@@ -51,13 +54,26 @@ public class BaseFrame extends JFrame implements ActionListener {
     }
 
     private void initializeContentPanel() {
-        this.contentPanel.add(new HomePage(this.sessionManager), "Home");
-        this.contentPanel.add(new ProfilePage(this.sessionManager), "Profile");
+        this.contentPanel.add(new HomePage(this), "Home");
+        this.contentPanel.add(new ProfilePage(this), "Profile");
         if (!this.sessionManager.isLoggedIn()) {
-            this.contentPanel.add(new LoginPage(this.sessionManager), "Login");
-            this.contentPanel.add(new RegisterPage(this.sessionManager), "Register");
+            this.contentPanel.add(new LoginPage(this), "Login");
+            this.contentPanel.add(new RegisterPage(this), "Register");
         }
         this.add(this.contentPanel, BorderLayout.CENTER);
+    }
+
+    public void refresh() {
+        this.navigationPanel.removeAll();
+        this.contentPanel.removeAll();
+        
+        this.initializeNavigationPanel();
+        this.navigationPanel.revalidate();
+        this.navigationPanel.repaint();
+        
+        this.initializeContentPanel();
+        this.contentPanel.revalidate();
+        this.contentPanel.repaint();
     }
 
     @Override
@@ -67,6 +83,11 @@ public class BaseFrame extends JFrame implements ActionListener {
     }
 
     protected void switchToPanel(String panelName) {
-        this.cardLayout.show(contentPanel, panelName);
+        if (!"Logout".equals(panelName)) {
+            this.cardLayout.show(contentPanel, panelName);
+        }
+        else {
+            // TODO: Logout logic
+        }
     }
 }
