@@ -87,7 +87,8 @@ public class BaseFrame extends JFrame implements ActionListener {
             this.cardLayout.show(contentPanel, panelName);
         }
         else {
-            // TODO: Logout logic
+            this.sessionManager.logout();
+            this.refresh();
         }
     }
 }

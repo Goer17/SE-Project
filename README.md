@@ -2,6 +2,8 @@
 
 84th-group SE coursework
 
+### MacOS / Linux
+
 #### Start
 
 ```shell
@@ -16,7 +18,6 @@ chmod +x build.sh
 ./build.sh
 ```
 
-
 #### Test
 
 ```shell
@@ -29,4 +30,27 @@ chmod +x test.sh
 
 ```shell
 ./test.sh
+```
+
+
+### Windows
+
+#### Start
+
+```powershell
+cd src/main/java
+```
+
+```powershell
+./build.bat
+```
+
+#### Test
+
+```powershell
+cd src/test
+```
+
+```powershell
+./test.bat
 ```

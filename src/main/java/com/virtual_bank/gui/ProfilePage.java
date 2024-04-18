@@ -11,26 +11,25 @@ import com.virtual_bank.core.*;
 
 
 public class ProfilePage extends JPanel {
-    private JLabel balanceLabel;
+    private JPanel balanceLabel;
     private JTextArea transactionsArea;
 
-
     public ProfilePage(BaseFrame baseFrame) {
-        this.setLayout(new BorderLayout());
-
         if (baseFrame.sessionManager.isLoggedIn()) {
+            this.setLayout(new BorderLayout());
             String username = baseFrame.sessionManager.getUsername();
             User currentUser = XMLDBManager.findUser(username);
             int money = XMLDBManager.findUser(username).getMoney();
 
-            balanceLabel = new JLabel(getBalanceHtml(username, money));
-            this.add(balanceLabel, BorderLayout.CENTER);
+            balanceLabel = new JPanel();
+            balanceLabel.add(new JLabel(getBalanceHtml(username, money)), BorderLayout.CENTER);
+            this.add(balanceLabel, BorderLayout.WEST);
 
             JButton depositButton = new JButton("Deposit Money");
             JButton withdrawButton = new JButton("Withdraw Money");
 
-            depositButton.addActionListener(e -> updateBalance(true,baseFrame));
-            withdrawButton.addActionListener(e -> updateBalance(false,baseFrame));
+            depositButton.addActionListener(e -> updateBalance(true, baseFrame));
+            withdrawButton.addActionListener(e -> updateBalance(false, baseFrame));
 
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(depositButton);
@@ -48,12 +47,12 @@ public class ProfilePage extends JPanel {
             this.repaint();
         }
         else {
-            this.add(new JLabel("Please login first"), BorderLayout.CENTER); 
+            this.add(new JLabel("<html><h2>Please login first :)</h2></html>"), BorderLayout.CENTER); 
         }
     }
 
     private String getBalanceHtml(String username, int money) {
-        return "<html><h1>Profile</h1><br><h3>" + username + "</h3><br>" +
+        return "<html><h3>Profile</h3><br><h3>" + username + "</h3><br>" +
                "<h3>Your account balance: " + "<span style='color: blue;'>" +
                money + "</span></h3></html>";
     }
@@ -83,7 +82,8 @@ public class ProfilePage extends JPanel {
             Transaction newTransaction = new Transaction(currentUser.getUid(), transactionType, amount);
             XMLDBManager.addTransaction(newTransaction);
             
-            balanceLabel.setText(getBalanceHtml(currentUser.getName(), newBalance));
+            balanceLabel.removeAll();
+            balanceLabel.add(new JLabel(this.getBalanceHtml(currentUser.getName(), currentUser.getMoney())), BorderLayout.CENTER);
             updateTransactionsDisplay(currentUser.getUid());
             this.revalidate();
             this.repaint();
