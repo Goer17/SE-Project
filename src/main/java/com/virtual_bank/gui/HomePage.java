@@ -95,6 +95,7 @@ public class HomePage extends JPanel {
 
     public HomePage(BaseFrame baseFrame) {
         if (baseFrame.sessionManager.isLoggedIn()) {
+            this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             this.setLayout(new BorderLayout());
             this.add(new JLabel("<html><h2>Hello, " + baseFrame.sessionManager.getUsername() + ".👋</h2></html>."), BorderLayout.NORTH);
             this.initMissionPanel(baseFrame);

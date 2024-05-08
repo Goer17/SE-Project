@@ -16,7 +16,7 @@ public class BaseFrame extends JFrame implements ActionListener {
 
     public BaseFrame(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
-
+        
         this.cardLayout = new CardLayout();
         this.contentPanel = new JPanel(cardLayout);
 

@@ -7,6 +7,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.w3c.dom.*;
@@ -104,6 +106,39 @@ public class XMLDBManager {
         return null; // Not found
     }
 
+    public static List<User> getAllUsers(Boolean sort) {
+        final String path = "../db/users.xml";
+        Document doc = readXML(path);
+        ArrayList<User> users = new ArrayList<>();
+        if (doc == null) return users;
+
+        NodeList userList = doc.getElementsByTagName("user");
+        for (int i = 0; i < userList.getLength(); i++) {
+            Node userNode = userList.item(i);
+            if (userNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element userElement = (Element)userNode;
+                String uid = userElement.getAttribute("uid");
+                String username = userElement.getElementsByTagName("name").item(0).getTextContent().strip();
+                if ("admin".equals(username)) continue;
+                String passwd = userElement.getElementsByTagName("passwd").item(0).getTextContent().strip();
+                int money = Integer.parseInt(userElement.getElementsByTagName("money").item(0).getTextContent().strip());
+                
+                User user = new User(uid, username, passwd, money);
+                users.add(user);
+            }
+        }
+        if (sort) {
+            Collections.sort(users, new Comparator<User>() {
+                @Override
+                public int compare(User u1, User u2) {
+                    return -(u1.getMoney() - u2.getMoney());
+                }
+            });
+        }
+
+        return users;
+    }
+
     public static boolean saveUser(User user) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -114,7 +149,7 @@ public class XMLDBManager {
         for (int i = 0; i < userList.getLength(); i++) {
             Node userNode = userList.item(i);
             if (userNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element userElement = (Element) userNode;
+                Element userElement = (Element)userNode;
                 if (uid.equals(userElement.getAttribute("uid"))) {
                     userElement.getElementsByTagName("name").item(0).setTextContent(user.getName());
                     userElement.getElementsByTagName("passwd").item(0).setTextContent(user.getPasswd());

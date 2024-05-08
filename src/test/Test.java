@@ -1,12 +1,14 @@
 package test;
 
+import java.util.List;
+
 import com.virtual_bank.core.*;
 
 public class Test {
     public static void main(String[] args) {
-        Mission mission = new Mission("#new", "Washing clothes", 1000);
-        XMLDBManager.addMission(mission);
-        mission = new Mission("#new", "Doing homework", 200);
-        XMLDBManager.addMission(mission);
+        List<User> users = XMLDBManager.getAllUsers(true);
+        for (User user : users) {
+            System.out.println(user.getName() + "  " + user.getMoney());
+        }
     }
 }

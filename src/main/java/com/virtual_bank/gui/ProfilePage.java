@@ -6,7 +6,6 @@ import javax.swing.*;
 
 import java.util.List;
 
-import com.virtual_bank.core.XMLDBManager;
 import com.virtual_bank.core.*;
 
 
@@ -16,6 +15,7 @@ public class ProfilePage extends JPanel {
 
     public ProfilePage(BaseFrame baseFrame) {
         if (baseFrame.sessionManager.isLoggedIn()) {
+            this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             this.setLayout(new BorderLayout());
             String username = baseFrame.sessionManager.getUsername();
             User currentUser = XMLDBManager.findUser(username);
