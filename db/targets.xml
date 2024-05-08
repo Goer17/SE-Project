@@ -1,0 +1,12 @@
+<targets>
+    <target>100</target>
+    <target>200</target>
+    <target>500</target>
+    <target>1000</target>
+    <target>2500</target>
+    <target>5000</target>
+    <target>10000</target>
+    <target>20000</target>
+    <target>50000</target>
+    <target>100000</target>
+</targets>

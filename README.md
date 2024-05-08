@@ -32,7 +32,6 @@ chmod +x test.sh
 ./test.sh
 ```
 
-
 ### Windows
 
 #### Start
@@ -54,3 +53,10 @@ cd src/test
 ```powershell
 ./test.bat
 ```
+
+
+### Login as Admin
+
+`username` : `admin`
+
+`password` : `123456`

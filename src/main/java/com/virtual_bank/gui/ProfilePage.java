@@ -58,7 +58,7 @@ public class ProfilePage extends JPanel {
     }
     
 
-    private void updateBalance(boolean isDeposit,BaseFrame baseFrame) {
+    private void updateBalance(boolean isDeposit, BaseFrame baseFrame) {
         String transactionType = isDeposit ? "Deposit" : "Withdraw";
         String input = JOptionPane.showInputDialog(this, "Enter amount to " + transactionType + ":");
         try {
@@ -82,12 +82,15 @@ public class ProfilePage extends JPanel {
             Transaction newTransaction = new Transaction(currentUser.getUid(), transactionType, amount);
             XMLDBManager.addTransaction(newTransaction);
             
-            balanceLabel.removeAll();
-            balanceLabel.add(new JLabel(this.getBalanceHtml(currentUser.getName(), currentUser.getMoney())), BorderLayout.CENTER);
-            updateTransactionsDisplay(currentUser.getUid());
-            this.revalidate();
-            this.repaint();
-        } catch (NumberFormatException e) {
+            baseFrame.refresh();
+            baseFrame.switchToPanel("Profile");
+            // balanceLabel.removeAll();
+            // balanceLabel.add(new JLabel(this.getBalanceHtml(currentUser.getName(), currentUser.getMoney())), BorderLayout.CENTER);
+            // updateTransactionsDisplay(currentUser.getUid());
+            // this.revalidate();
+            // this.repaint();
+        }
+        catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid number!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

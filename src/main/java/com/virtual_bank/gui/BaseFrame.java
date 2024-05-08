@@ -31,12 +31,32 @@ public class BaseFrame extends JFrame implements ActionListener {
         // Initialize navigatation panel and content panel.
         this.initializeNavigationPanel();
         this.initializeContentPanel();
+
+        if (!sessionManager.isLoggedIn()) {
+            this.switchToPanel("Login");
+        }
+        else {
+            if (!"admin".equals(sessionManager.getUsername())) {
+                this.switchToPanel("Home");
+            }
+            else {
+                this.switchToPanel("Admin");
+            }
+        }
     }
 
     private void initializeNavigationPanel() {
         // Add navigation buttons.
-        this.addNavigationButton("Home");
-        this.addNavigationButton("Profile");
+        if (this.sessionManager.isLoggedIn()) {
+            if (!this.sessionManager.getUsername().equals("admin")) {
+                this.addNavigationButton("Home");
+                this.addNavigationButton("Profile");
+            }
+            else {
+                // Super user
+                this.addNavigationButton("Admin");
+            }
+        }
         if (!this.sessionManager.isLoggedIn()) {
             this.addNavigationButton("Login");
             this.addNavigationButton("Register");
@@ -54,8 +74,16 @@ public class BaseFrame extends JFrame implements ActionListener {
     }
 
     private void initializeContentPanel() {
-        this.contentPanel.add(new HomePage(this), "Home");
-        this.contentPanel.add(new ProfilePage(this), "Profile");
+        if (this.sessionManager.isLoggedIn()) {
+            if (!"admin".equals(this.sessionManager.getUsername())) {
+                this.contentPanel.add(new HomePage(this), "Home");
+                this.contentPanel.add(new ProfilePage(this), "Profile");
+            }
+            else {
+                this.contentPanel.add(new AdminPage(this), "Admin");
+            }
+        }
+        
         if (!this.sessionManager.isLoggedIn()) {
             this.contentPanel.add(new LoginPage(this), "Login");
             this.contentPanel.add(new RegisterPage(this), "Register");

@@ -42,7 +42,7 @@ public class XMLDBManager {
     }
 
     public static boolean addUser(User user) {
-        String path = "../db/users.xml";
+        final String path = "../db/users.xml";
         Document doc = readXML(path);
         String uid = user.getUid();
         String name = user.getName();
@@ -55,15 +55,7 @@ public class XMLDBManager {
             if (userNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element userElement = (Element)userNode;
                 String userElementName = userElement.getElementsByTagName("name").item(0).getTextContent();
-                if (name.equals(userElementName)) {
-                    return false;
-                }
-                if (uid.equals(userElement.getAttribute("uid"))) {
-                    // If the UID is duplicated, the original record is overwritten
-                    userElement.getElementsByTagName("name").item(0).setTextContent(name);
-                    userElement.getElementsByTagName("passwd").item(0).setTextContent(passwd);
-                    userElement.getElementsByTagName("money").item(0).setTextContent(Integer.toString(money));
-
+                if (name.equals(userElementName) || uid.equals(userElement.getAttribute("uid"))) {
                     return false;
                 }
             }
@@ -92,7 +84,7 @@ public class XMLDBManager {
     }
 
     public static User findUser(String username) {
-        String path = "../db/users.xml";
+        final String path = "../db/users.xml";
         Document doc = readXML(path); 
 
         NodeList userList = doc.getElementsByTagName("user");
@@ -113,11 +105,9 @@ public class XMLDBManager {
     }
 
     public static boolean saveUser(User user) {
-        String path = "../db/users.xml";
+        final String path = "../db/users.xml";
         Document doc = readXML(path);
-        if (doc == null) {
-            return false;
-        }
+        if (doc == null) return false;
     
         String uid = user.getUid();
         NodeList userList = doc.getElementsByTagName("user");
@@ -140,7 +130,7 @@ public class XMLDBManager {
     }
 
     public static void addTransaction(Transaction transaction) {
-        String path = "../db/records.xml"; 
+        final String path = "../db/records.xml"; 
         Document doc = readXML(path);
         
         Element transactionElement = doc.createElement("transaction");
@@ -165,19 +155,19 @@ public class XMLDBManager {
     }
     
     public static List<Transaction> getTransactionsForUser(String uid) {
-        String path = "../db/records.xml";
+        final String path = "../db/records.xml";
         Document doc = readXML(path);
         List<Transaction> transactions = new ArrayList<>();
     
         if (doc == null) {
-            return transactions; // 如果文档不存在或读取失败，则返回空列表
+            return transactions;
         }
     
         NodeList transactionList = doc.getElementsByTagName("transaction");
         for (int i = 0; i < transactionList.getLength(); i++) {
             Node transactionNode = transactionList.item(i);
             if (transactionNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element transactionElement = (Element) transactionNode;
+                Element transactionElement = (Element)transactionNode;
                 if (uid.equals(transactionElement.getAttribute("uid"))) {
                     String transactionId = transactionElement.getAttribute("transactionId");
                     String type = transactionElement.getElementsByTagName("type").item(0).getTextContent();
@@ -193,5 +183,103 @@ public class XMLDBManager {
         return transactions;
     }
 
+    public static Boolean addMission(Mission mission) {
+        final String path = "../db/missions.xml";
+        Document doc = readXML(path);
+        if (doc == null) return false;
+        
+        String mid = mission.getMid();
+        NodeList missionList = doc.getElementsByTagName("mission");
+        for (int i = 0; i < missionList.getLength(); i++) {
+            Node missionNode = missionList.item(i);
+            if (missionNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element missionElement = (Element)missionNode;
+                String _mid = missionElement.getElementsByTagName("mid").item(0).getTextContent().strip();
+                if (mid.equals(_mid)) return false;
+            }
+        }
+        String content = mission.getContent();
+        int reward = mission.getReward();
+
+        Element missionElement = doc.createElement("mission");
+
+        Element midElement = doc.createElement("mid");
+        midElement.appendChild(doc.createTextNode(mid));
+        missionElement.appendChild(midElement);
+
+        Element contentElement = doc.createElement("content");
+        contentElement.appendChild(doc.createTextNode(content));
+        missionElement.appendChild(contentElement);
+
+        Element rewardElement = doc.createElement("reward");
+        rewardElement.appendChild(doc.createTextNode(String.valueOf(reward)));
+        missionElement.appendChild(rewardElement);
+
+        doc.getDocumentElement().appendChild(missionElement);
+        saveXML(doc, path);
+
+        return true;
+    }
+
+    public static void eraseMission(String mid) {
+        final String path = "../db/missions.xml";
+        Document doc = readXML(path);
+        if (doc == null) return;
+
+        NodeList missionList = doc.getElementsByTagName("mission");
+        for (int i = 0; i < missionList.getLength(); i++) {
+            Node missionNode = missionList.item(i);
+            if (missionNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element missionElement = (Element)missionNode;
+                String _mid = missionElement.getElementsByTagName("mid").item(0).getTextContent().strip();
+                if (mid.equals(_mid)) {
+                    missionElement.getParentNode().removeChild(missionElement);
+                }
+            }
+        }
+
+        saveXML(doc, path);
+    }
+
+    public static List<Mission> getMissionsList() {
+        final String path = "../db/missions.xml";
+        Document doc = readXML(path);
+        List<Mission> missions = new ArrayList<>();
+        if (doc == null) return missions;
+
+        NodeList missionList = doc.getElementsByTagName("mission");
+        for (int i = 0; i < missionList.getLength(); i++) {
+            Node missionNode = missionList.item(i);
+            if (missionNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element missionElement = (Element)missionNode;
+                String mid = missionElement.getElementsByTagName("mid").item(0).getTextContent().strip();
+                String missionContent = missionElement.getElementsByTagName("content").item(0).getTextContent().strip();
+                int reward = Integer.parseInt(missionElement.getElementsByTagName("reward").item(0).getTextContent().strip());
+                Mission mission = new Mission(mid, missionContent, reward);
+
+                missions.add(mission);
+            }
+        }
+
+        return missions;
+    }
     
+    public static List<Integer> getTargets() {
+        final String path = "../db/targets.xml";
+        ArrayList<Integer> targets = new ArrayList<>();
+        Document doc = readXML(path);
+        if (doc == null) return targets;
+
+        NodeList targetList = doc.getElementsByTagName("target");
+        for (int i = 0; i < targetList.getLength(); i++) {
+            Node targetNode = targetList.item(i);
+            if (targetNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element targetElement = (Element)targetNode;
+                Integer target = Integer.parseInt(targetElement.getTextContent().strip());
+                targets.add(target);
+            }
+        }
+
+        return targets;
+    }
 }
