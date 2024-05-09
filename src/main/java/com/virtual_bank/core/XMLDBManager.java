@@ -1,6 +1,8 @@
 package com.virtual_bank.core;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -317,4 +319,141 @@ public class XMLDBManager {
 
         return targets;
     }
+
+    public static boolean addFixedDeposit(FixedDeposit deposit) {
+        final String path = "../db/fixed_deposits.xml";
+        Document doc = readXML(path);
+    
+        Element rootElement = doc.getDocumentElement();
+    
+        Element depositElement = doc.createElement("fixedDeposit");
+        depositElement.setAttribute("uid", deposit.getUid());
+    
+        Element amountElement = doc.createElement("amount");
+        amountElement.appendChild(doc.createTextNode(String.valueOf(deposit.getAmount())));
+        depositElement.appendChild(amountElement);
+    
+        Element rateElement = doc.createElement("annualInterestRate");
+        rateElement.appendChild(doc.createTextNode(String.valueOf(deposit.getAnnualInterestRate())));
+        depositElement.appendChild(rateElement);
+    
+        Element startDateElement = doc.createElement("startDate");
+        startDateElement.appendChild(doc.createTextNode(deposit.getStartDate().toString()));
+        depositElement.appendChild(startDateElement);
+    
+        Element endDateElement = doc.createElement("endDate");
+        endDateElement.appendChild(doc.createTextNode(deposit.getEndDate().toString()));
+        depositElement.appendChild(endDateElement);
+    
+        rootElement.appendChild(depositElement);
+        saveXML(doc, path);
+    
+        return true;
+    }
+
+    public static List<FixedDeposit> getFixedDepositsForUser(String uid) {
+        final String path = "../db/fixed_deposits.xml";
+        Document doc = readXML(path);
+        List<FixedDeposit> deposits = new ArrayList<>();
+
+        if (doc == null) return deposits;
+
+        NodeList depositList = doc.getElementsByTagName("fixedDeposit");
+        for (int i = 0; i < depositList.getLength(); i++) {
+            Node depositNode = depositList.item(i);
+            if (depositNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element depositElement = (Element) depositNode;
+                if (uid.equals(depositElement.getAttribute("uid"))) {
+                    double amount = Double.parseDouble(depositElement.getElementsByTagName("amount").item(0).getTextContent());
+                    double rate = Double.parseDouble(depositElement.getElementsByTagName("annualInterestRate").item(0).getTextContent());
+                    LocalDate startDate = LocalDate.parse(depositElement.getElementsByTagName("startDate").item(0).getTextContent());
+                    LocalDate endDate = LocalDate.parse(depositElement.getElementsByTagName("endDate").item(0).getTextContent());
+
+                    FixedDeposit deposit = new FixedDeposit(uid, amount, rate, startDate, endDate);
+                    deposits.add(deposit);
+                }
+            }
+        }
+
+        return deposits;
+    }
+
+    public static User findUserByUid(String uid) {
+        final String path = "../db/users.xml";
+        Document doc = readXML(path);
+        if (doc == null) return null;
+    
+        NodeList userList = doc.getElementsByTagName("user");
+        for (int i = 0; i < userList.getLength(); i++) {
+            Node userNode = userList.item(i);
+            if (userNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element userElement = (Element) userNode;
+                if (uid.equals(userElement.getAttribute("uid"))) {
+                    String username = userElement.getElementsByTagName("name").item(0).getTextContent();
+                    String passwd = userElement.getElementsByTagName("passwd").item(0).getTextContent();
+                    int money = Integer.parseInt(userElement.getElementsByTagName("money").item(0).getTextContent());
+                    return new User(uid, username, passwd, money);
+                }
+            }
+        }
+        return null;
+    }
+    
+
+    public static void processMaturedDepositsForUser(String uid) {
+        final String path = "../db/fixed_deposits.xml";
+        Document doc = readXML(path);
+        if (doc == null) {
+            System.out.println("Failed to load the fixed deposits XML document.");
+            return;
+        }
+    
+        NodeList depositList = doc.getElementsByTagName("fixedDeposit");
+        List<Node> toRemove = new ArrayList<>();
+        boolean changesMade = false;
+    
+        for (int i = 0; i < depositList.getLength(); i++) {
+            Node depositNode = depositList.item(i);
+            if (depositNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element depositElement = (Element) depositNode;
+                if (uid.equals(depositElement.getAttribute("uid"))) {
+                    LocalDate endDate = LocalDate.parse(depositElement.getElementsByTagName("endDate").item(0).getTextContent());
+                    if (endDate.isBefore(LocalDate.now()) || endDate.isEqual(LocalDate.now())) {
+                    // if(true){
+                        double amount = Double.parseDouble(depositElement.getElementsByTagName("amount").item(0).getTextContent());
+                        double annualInterestRate = Double.parseDouble(depositElement.getElementsByTagName("annualInterestRate").item(0).getTextContent()); 
+                        LocalDate startDate = LocalDate.parse(depositElement.getElementsByTagName("startDate").item(0).getTextContent());; 
+                        long days = ChronoUnit.DAYS.between(startDate, endDate);
+                        amount += amount * (annualInterestRate / 365) * days;
+                        System.out.println("In:" + amount);
+                        User user = findUserByUid(uid);
+                        if (user != null) {
+                            double newBalance = user.getMoney() + amount; 
+                            user.setMoney((int)newBalance);
+                            saveUser(user);
+                            toRemove.add(depositNode);
+                            changesMade = true;
+                        } else {
+                            System.out.println("User with UID " + uid + " not found.");
+                        }
+                    }
+                }
+            }
+        }
+        for (Node node : toRemove) {
+            node.getParentNode().removeChild(node);
+        }
+    
+
+        if (changesMade) {
+            saveXML(doc, path);
+            System.out.println("Matured deposits processed and XML updated.");
+        } else {
+            System.out.println("No matured deposits found or processed.");
+        }
+    }
+    
+
+    
+    
 }

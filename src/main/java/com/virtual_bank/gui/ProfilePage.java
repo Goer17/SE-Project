@@ -1,6 +1,7 @@
 package com.virtual_bank.gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 
@@ -12,6 +13,9 @@ import com.virtual_bank.core.*;
 public class ProfilePage extends JPanel {
     private JPanel balanceLabel;
     private JTextArea transactionsArea;
+    private JTextArea fixedDepositsArea;
+    private JButton fixedDepositButton;
+
 
     public ProfilePage(BaseFrame baseFrame) {
         if (baseFrame.sessionManager.isLoggedIn()) {
@@ -20,6 +24,7 @@ public class ProfilePage extends JPanel {
             String username = baseFrame.sessionManager.getUsername();
             User currentUser = XMLDBManager.findUser(username);
             int money = XMLDBManager.findUser(username).getMoney();
+            XMLDBManager.processMaturedDepositsForUser(currentUser.getUid());
 
             balanceLabel = new JPanel();
             balanceLabel.add(new JLabel(getBalanceHtml(username, money)), BorderLayout.CENTER);
@@ -27,6 +32,20 @@ public class ProfilePage extends JPanel {
 
             JButton depositButton = new JButton("Deposit Money");
             JButton withdrawButton = new JButton("Withdraw Money");
+            fixedDepositButton = new JButton("Create Fixed Deposit");
+
+            fixedDepositButton.addActionListener(e -> {
+                FixedDepositDialog dialog = new FixedDepositDialog(baseFrame, currentUser);
+
+
+                dialog.addFixedDepositListener(evt -> {
+                    baseFrame.refresh();
+                    baseFrame.switchToPanel("Profile");
+                });
+
+                dialog.setVisible(true);
+            });
+
 
             depositButton.addActionListener(e -> updateBalance(true, baseFrame));
             withdrawButton.addActionListener(e -> updateBalance(false, baseFrame));
@@ -34,14 +53,25 @@ public class ProfilePage extends JPanel {
             JPanel buttonPanel = new JPanel();
             buttonPanel.add(depositButton);
             buttonPanel.add(withdrawButton);
+            buttonPanel.add(fixedDepositButton);
             this.add(buttonPanel, BorderLayout.SOUTH);
 
             transactionsArea = new JTextArea(10, 30);
             transactionsArea.setEditable(false);
             updateTransactionsDisplay(currentUser.getUid()); 
+            JScrollPane transactionsScrollPane = new JScrollPane(transactionsArea);
 
-            JScrollPane scrollPane = new JScrollPane(transactionsArea);
-            this.add(scrollPane, BorderLayout.EAST);
+            // Fixed deposits display setup
+            fixedDepositsArea = new JTextArea(10, 30);
+            fixedDepositsArea.setEditable(false);
+            updateFixedDepositsDisplay(currentUser.getUid());
+            JScrollPane fixedDepositsScrollPane = new JScrollPane(fixedDepositsArea);
+
+            // Panel to hold both transactions and fixed deposits
+            JPanel displayPanel = new JPanel(new GridLayout(1, 2));
+            displayPanel.add(transactionsScrollPane);
+            displayPanel.add(fixedDepositsScrollPane);
+            this.add(displayPanel, BorderLayout.CENTER);
 
             this.revalidate();
             this.repaint();
@@ -61,6 +91,11 @@ public class ProfilePage extends JPanel {
     private void updateBalance(boolean isDeposit, BaseFrame baseFrame) {
         String transactionType = isDeposit ? "Deposit" : "Withdraw";
         String input = JOptionPane.showInputDialog(this, "Enter amount to " + transactionType + ":");
+
+        if (input == null) {
+            return; 
+        }
+
         try {
             int amount = Integer.parseInt(input);
             if (amount < 0) {
@@ -97,9 +132,24 @@ public class ProfilePage extends JPanel {
 
     private void updateTransactionsDisplay(String uid) {
         List<Transaction> transactions = XMLDBManager.getTransactionsForUser(uid);
-        transactionsArea.setText(""); // 清空现有记录
+        transactionsArea.setText(""); 
         for (Transaction transaction : transactions) {
             transactionsArea.append(transaction.getDate() + " - " + transaction.getType() + " - $" + transaction.getAmount() + "\n");
         }
     }
+
+    private void updateFixedDepositsDisplay(String uid) {
+        List<FixedDeposit> fixedDeposits = XMLDBManager.getFixedDepositsForUser(uid);
+        fixedDepositsArea.setText(""); // Clear previous entries
+        for (FixedDeposit deposit : fixedDeposits) {
+            double maturityAmount = deposit.calculateMaturityAmount(); // Calculate the total amount at maturity
+            fixedDepositsArea.append(deposit.getStartDate() + " - " + deposit.getEndDate() +
+                                     " - Amount: $" + String.format("%.2f", deposit.getAmount()) +
+                                     " - Rate: " + String.format("%.2f%%", deposit.getAnnualInterestRate() * 100) +
+                                     " - Maturity Amount: $" + String.format("%.2f", maturityAmount) + "\n");
+        }
+    }
+    
+
+
 }
