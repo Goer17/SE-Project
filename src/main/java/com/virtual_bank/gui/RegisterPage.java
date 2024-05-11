@@ -8,10 +8,12 @@ import javax.swing.*;
 import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
 
+import com.virtual_bank.gui.common.Button;
+
 public class RegisterPage extends JPanel {
     private JTextField usernameField;
     private JPasswordField passwordField;
-    private JButton registerButton;
+    private Button registerButton;
     private JLabel messageLabel;
 
     public RegisterPage(BaseFrame baseFrame) {
@@ -33,7 +35,7 @@ public class RegisterPage extends JPanel {
         panel.add(messageLabel);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
 
-        this.registerButton = new JButton("Register");
+        this.registerButton = new Button("Register");
         this.registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

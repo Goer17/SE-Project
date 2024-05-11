@@ -7,7 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import com.virtual_bank.core.*;;
+import com.virtual_bank.core.*;
+import com.virtual_bank.gui.common.Button;
 
 public class AdminPage extends JPanel {
     private JPanel rankPanel;
@@ -61,7 +62,7 @@ public class AdminPage extends JPanel {
         missionReward.setMaximumSize(maxDimension);
         addMissionBox.add(missionReward);
 
-        JButton addButton = new JButton("Add");
+        Button addButton = new Button("Add");
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

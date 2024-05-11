@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.*;
 
 import com.virtual_bank.core.*;
+import com.virtual_bank.gui.common.Button;
 
 public class HomePage extends JPanel {
     private JPanel missionPanel;
@@ -22,7 +23,7 @@ public class HomePage extends JPanel {
         itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         String description = mission.description();
         JLabel label = new JLabel(description);
-        JButton button = new JButton("Done");
+        Button button = new Button("Done");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

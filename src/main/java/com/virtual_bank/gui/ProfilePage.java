@@ -8,13 +8,13 @@ import javax.swing.*;
 import java.util.List;
 
 import com.virtual_bank.core.*;
-
+import com.virtual_bank.gui.common.Button;
 
 public class ProfilePage extends JPanel {
     private JPanel balanceLabel;
     private JTextArea transactionsArea;
     private JTextArea fixedDepositsArea;
-    private JButton fixedDepositButton;
+    private Button fixedDepositButton;
 
 
     public ProfilePage(BaseFrame baseFrame) {
@@ -30,9 +30,9 @@ public class ProfilePage extends JPanel {
             balanceLabel.add(new JLabel(getBalanceHtml(username, money)), BorderLayout.CENTER);
             this.add(balanceLabel, BorderLayout.WEST);
 
-            JButton depositButton = new JButton("Deposit Money");
-            JButton withdrawButton = new JButton("Withdraw Money");
-            fixedDepositButton = new JButton("Create Fixed Deposit");
+            Button depositButton = new Button("Deposit Money");
+            Button withdrawButton = new Button("Withdraw Money");
+            fixedDepositButton = new Button("Create Fixed Deposit");
 
             fixedDepositButton.addActionListener(e -> {
                 FixedDepositDialog dialog = new FixedDepositDialog(baseFrame, currentUser);

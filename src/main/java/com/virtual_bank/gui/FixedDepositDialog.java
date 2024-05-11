@@ -8,14 +8,15 @@ import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
-
+import com.virtual_bank.gui.common.Button;
 
 public class FixedDepositDialog extends JDialog {
     private JTextField depositAmountField;
     private JTextField depositDurationField;
-    private JButton createButton;
+    private Button createButton;
     private JPanel contentPanel;
     private JLabel headerLabel;
 
@@ -66,7 +67,7 @@ public class FixedDepositDialog extends JDialog {
 
         // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        createButton = new JButton("Create Deposit");
+        createButton = new Button("Create Deposit");
         createButton.setFont(new Font("Serif", Font.PLAIN, 15));
         createButton.addActionListener(e -> createFixedDeposit(currentUser));
         buttonPanel.add(createButton);
