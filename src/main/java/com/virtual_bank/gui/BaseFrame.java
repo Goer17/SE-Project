@@ -8,9 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.virtual_bank.gui.common.*;
+import com.virtual_bank.gui.common.Button;
+
 public class BaseFrame extends JFrame implements ActionListener {
-    protected JPanel navigationPanel;
-    protected JPanel contentPanel;
+    protected CutePanel navigationPanel;
+    protected CutePanel contentPanel;
     protected CardLayout cardLayout;
     protected SessionManager sessionManager;
 
@@ -18,9 +21,9 @@ public class BaseFrame extends JFrame implements ActionListener {
         this.sessionManager = sessionManager;
         
         this.cardLayout = new CardLayout();
-        this.contentPanel = new JPanel(cardLayout);
+        this.contentPanel = new CutePanel(cardLayout);
 
-        this.navigationPanel = new JPanel();
+        this.navigationPanel = new CutePanel();
         this.navigationPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         this.setTitle("Virtual Bank");
@@ -68,7 +71,7 @@ public class BaseFrame extends JFrame implements ActionListener {
     }
 
     protected void addNavigationButton(String name) {
-        JButton button = new JButton(name);
+        Button button = new Button(name);
         button.addActionListener(this);
         this.navigationPanel.add(button);
     }

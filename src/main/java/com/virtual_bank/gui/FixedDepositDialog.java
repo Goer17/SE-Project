@@ -12,13 +12,15 @@ import java.util.List;
 import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
 import com.virtual_bank.gui.common.Button;
+import com.virtual_bank.gui.common.CutePanel;
+import com.virtual_bank.gui.common.CuteTextField;
 
 public class FixedDepositDialog extends JDialog {
-    private JTextField depositAmountField;
-    private JTextField depositDurationField;
+    private CuteTextField depositAmountField;
+    private CuteTextField depositDurationField;
     private Button createButton;
-    private JPanel contentPanel;
-    private JLabel headerLabel;
+    private CutePanel contentPanel;
+    private Label headerLabel;
 
     private List<ActionListener> listeners = new ArrayList<>();
 
@@ -41,34 +43,34 @@ public class FixedDepositDialog extends JDialog {
         getContentPane().setLayout(new BorderLayout(10, 10));
 
         // Header panel with title
-        headerLabel = new JLabel("New Fixed Deposit", JLabel.CENTER);
-        headerLabel.setFont(new Font("Serif", Font.BOLD, 20));
-        headerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        headerLabel = new Label("New Fixed Deposit", JLabel.CENTER);
+//        headerLabel.setFont(new Font("Serif", Font.BOLD, 20));
+//        headerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         getContentPane().add(headerLabel, BorderLayout.NORTH);
 
         // Main content panel
-        contentPanel = new JPanel();
+        contentPanel =  new CutePanel();
         contentPanel.setLayout(new GridLayout(0, 2, 10, 5)); // Dynamic rows, 2 columns
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
         // Adding amount label and field
-        JLabel amountLabel = new JLabel("Amount:");
-        depositAmountField = new JTextField();
+        Label amountLabel = new Label("Amount:");
+        depositAmountField = new CuteTextField(10);
         contentPanel.add(amountLabel);
         contentPanel.add(depositAmountField);
 
         // Adding duration label and field
-        JLabel durationLabel = new JLabel("Duration (months):");
-        depositDurationField = new JTextField();
+        Label durationLabel = new Label("Duration (months):");
+        depositDurationField =  new CuteTextField(10);
         contentPanel.add(durationLabel);
         contentPanel.add(depositDurationField);
 
         getContentPane().add(contentPanel, BorderLayout.CENTER);
 
         // Button panel
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        CutePanel buttonPanel = new CutePanel(new FlowLayout(FlowLayout.CENTER));
         createButton = new Button("Create Deposit");
-        createButton.setFont(new Font("Serif", Font.PLAIN, 15));
+//        createButton.setFont(new Font("Serif", Font.PLAIN, 15));
         createButton.addActionListener(e -> createFixedDeposit(currentUser));
         buttonPanel.add(createButton);
 

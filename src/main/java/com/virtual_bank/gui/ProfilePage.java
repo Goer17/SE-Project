@@ -9,11 +9,13 @@ import java.util.List;
 
 import com.virtual_bank.core.*;
 import com.virtual_bank.gui.common.Button;
+import com.virtual_bank.gui.common.CutePanel;
+import com.virtual_bank.gui.common.CuteTextArea;
 
 public class ProfilePage extends JPanel {
-    private JPanel balanceLabel;
-    private JTextArea transactionsArea;
-    private JTextArea fixedDepositsArea;
+    private CutePanel balanceLabel;
+    private CuteTextArea transactionsArea;
+    private CuteTextArea fixedDepositsArea;
     private Button fixedDepositButton;
 
 
@@ -26,7 +28,7 @@ public class ProfilePage extends JPanel {
             int money = XMLDBManager.findUser(username).getMoney();
             XMLDBManager.processMaturedDepositsForUser(currentUser.getUid());
 
-            balanceLabel = new JPanel();
+            balanceLabel = new CutePanel();
             balanceLabel.add(new JLabel(getBalanceHtml(username, money)), BorderLayout.CENTER);
             this.add(balanceLabel, BorderLayout.WEST);
 
@@ -56,13 +58,13 @@ public class ProfilePage extends JPanel {
             buttonPanel.add(fixedDepositButton);
             this.add(buttonPanel, BorderLayout.SOUTH);
 
-            transactionsArea = new JTextArea(10, 30);
+            transactionsArea = new CuteTextArea(10, 30);
             transactionsArea.setEditable(false);
             updateTransactionsDisplay(currentUser.getUid()); 
             JScrollPane transactionsScrollPane = new JScrollPane(transactionsArea);
 
             // Fixed deposits display setup
-            fixedDepositsArea = new JTextArea(10, 30);
+            fixedDepositsArea = new CuteTextArea(10, 30);
             fixedDepositsArea.setEditable(false);
             updateFixedDepositsDisplay(currentUser.getUid());
             JScrollPane fixedDepositsScrollPane = new JScrollPane(fixedDepositsArea);

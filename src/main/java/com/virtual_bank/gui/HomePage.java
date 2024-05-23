@@ -1,8 +1,6 @@
 package com.virtual_bank.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -11,18 +9,21 @@ import javax.swing.*;
 
 import com.virtual_bank.core.*;
 import com.virtual_bank.gui.common.Button;
+import com.virtual_bank.gui.common.CuteList;
+import com.virtual_bank.gui.common.CutePanel;
+import com.virtual_bank.gui.common.CuteScrollPane;
 
 public class HomePage extends JPanel {
     private JPanel missionPanel;
-    private JPanel missionListPanel;
-    private JPanel targetPanel;
+    private CutePanel missionListPanel;
+    private CutePanel targetPanel;
 
     private void addItem(Mission mission, BaseFrame baseFrame) {
-        JPanel itemPanel = new JPanel();
+        CutePanel itemPanel = new CutePanel();
         itemPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         String description = mission.description();
-        JLabel label = new JLabel(description);
+        Label label = new Label(description);
         Button button = new Button("Done");
         button.addActionListener(new ActionListener() {
             @Override
@@ -49,7 +50,7 @@ public class HomePage extends JPanel {
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BoxLayout(this.missionPanel, BoxLayout.Y_AXIS));
-        this.missionListPanel = new JPanel();
+        this.missionListPanel = new CutePanel();
         this.missionListPanel.setLayout(new BoxLayout(this.missionListPanel, BoxLayout.Y_AXIS));
         List<Mission> missions = XMLDBManager.getMissionsList();
         if (missions.size() > 0) {
@@ -66,7 +67,7 @@ public class HomePage extends JPanel {
     }
 
     private void initTargetPanel(BaseFrame baseFrame) {
-        this.targetPanel = new JPanel();
+        this.targetPanel = new CutePanel();
         this.targetPanel.setLayout(new BorderLayout());
         List<Integer> targets = XMLDBManager.getTargets();
         String username = baseFrame.sessionManager.getUsername();
@@ -75,7 +76,7 @@ public class HomePage extends JPanel {
         int nextTarget = -1;
         for (int i = 0; i < targets.size(); i++) {
             if (money >= targets.get(i)) {
-                targetModel.addElement("" + targets.get(i) + "\t\t" + "✅");
+                targetModel.addElement("" + targets.get(i) + "\t\t" + "√");
             }
             else {
                 targetModel.addElement("" + targets.get(i));
@@ -87,9 +88,9 @@ public class HomePage extends JPanel {
         if (nextTarget > 0) {
             this.targetPanel.add(new JLabel("<html><h3>Progress on your next goal: " + money + "/" + nextTarget + "</h3></html>"), BorderLayout.NORTH);
         }
-        JList<String> targeJList = new JList<>(targetModel);
+        CuteList<String> targeJList = new CuteList<>(targetModel);
         targeJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane targetScrollPane = new JScrollPane(targeJList);
+        CuteScrollPane targetScrollPane = new CuteScrollPane(targeJList);
         this.targetPanel.add(targetScrollPane, BorderLayout.CENTER);
         this.add(this.targetPanel, BorderLayout.WEST);
     }

@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.border.EmptyBorder;
 
 public class Button extends JButton {
 
@@ -19,14 +18,14 @@ public class Button extends JButton {
         setBackground(new Color(255, 182, 193));           // 设置淡粉色背景
         setForeground(Color.WHITE);                        // 设置文字颜色
         setFocusPainted(false);                            // 去除焦点的边框
-        setBorder(new EmptyBorder(10, 20, 10, 20));        // 设置边距
         setContentAreaFilled(false);                       // 不在绘制按钮区域内填充背景色
+        setBorderPainted(false);                           // 不绘制边框
 
         // 鼠标悬停时改变样式
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setBackground(new Color(255, 105, 180)); // 鼠标悬停时的背景颜色
+                setBackground(new Color(239, 103, 125)); // 鼠标悬停时的背景颜色
             }
 
             @Override
@@ -48,5 +47,11 @@ public class Button extends JButton {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // 绘制圆角矩形
         super.paintComponent(g);
+    }
+
+    // 覆盖paintBorder方法，不绘制边框
+    @Override
+    protected void paintBorder(Graphics g) {
+        // 不绘制任何边框
     }
 }

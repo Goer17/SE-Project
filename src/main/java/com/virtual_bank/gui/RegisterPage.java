@@ -9,12 +9,14 @@ import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
 
 import com.virtual_bank.gui.common.Button;
+import com.virtual_bank.gui.common.CutePasswordField;
+import com.virtual_bank.gui.common.CuteTextField;
 
 public class RegisterPage extends JPanel {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+    private CuteTextField usernameField;
+    private CutePasswordField passwordField;
     private Button registerButton;
-    private JLabel messageLabel;
+    private Label messageLabel;
 
     public RegisterPage(BaseFrame baseFrame) {
         JPanel panel = new JPanel();
@@ -22,16 +24,16 @@ public class RegisterPage extends JPanel {
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         panel.add(new JLabel("Username:"));
-        this.usernameField = new JTextField(20);
+        this.usernameField = new CuteTextField(20);
         panel.add(usernameField);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
 
         panel.add(new JLabel("Password:"));
-        this.passwordField = new JPasswordField(20);
+        this.passwordField = new CutePasswordField(20);
         panel.add(passwordField);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        this.messageLabel = new JLabel();
+        this.messageLabel = new Label();
         panel.add(messageLabel);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
 

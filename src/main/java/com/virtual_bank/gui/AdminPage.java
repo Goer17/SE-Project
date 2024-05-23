@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import com.virtual_bank.core.*;
-import com.virtual_bank.gui.common.Button;
+import com.virtual_bank.gui.common.*;
 
 public class AdminPage extends JPanel {
     private JPanel rankPanel;
@@ -17,16 +17,16 @@ public class AdminPage extends JPanel {
     private void initRankPanel() {
         this.rankPanel = new JPanel();
         this.rankPanel.setLayout(new BorderLayout());
-        this.rankPanel.add(new JLabel("<html><h3>Rank</h3></html>"), BorderLayout.NORTH);
+        this.rankPanel.add(new CuteLabel("<html><h3>Rank</h3></html>"), BorderLayout.NORTH);
         
         List<User> users = XMLDBManager.getAllUsers(true);
         DefaultListModel<String> rankModel = new DefaultListModel<>();
         for (int i = 0; i < users.size(); i++) {
             rankModel.addElement("No." + i + " " + users.get(i).getName() + " -- " + users.get(i).getMoney());
         }
-        JList<String> rankJList = new JList<>(rankModel);
+        CuteList<String> rankJList = new CuteList<>(rankModel);
         rankJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollPane = new JScrollPane(rankJList);
+        CuteScrollPane scrollPane = new CuteScrollPane(rankJList);
         this.rankPanel.add(scrollPane, BorderLayout.CENTER);
 
         this.add(this.rankPanel, BorderLayout.WEST);
@@ -35,30 +35,30 @@ public class AdminPage extends JPanel {
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BoxLayout(missionPanel, BoxLayout.Y_AXIS));
-        this.missionPanel.add(new JLabel("<html><h3>Missions</h3></html>"));
+        this.missionPanel.add(new CuteLabel("<html><h3>Missions</h3></html>"));
 
         List<Mission> missions = XMLDBManager.getMissionsList();
         DefaultListModel<String> missionModel = new DefaultListModel<>();
         for (Mission mission : missions) {
             missionModel.addElement(mission.description());
         }
-        JList<String> missionJList = new JList<>(missionModel);
+        CuteList<String> missionJList = new CuteList<>(missionModel);
         missionJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollPane = new JScrollPane(missionJList);
+        CuteScrollPane scrollPane = new CuteScrollPane(missionJList);
         this.missionPanel.add(scrollPane);
         
         JPanel addMissionBox = new JPanel();
         addMissionBox.setLayout(new BoxLayout(addMissionBox, BoxLayout.Y_AXIS));
 
-        addMissionBox.add(new JLabel("<html><h4>Add a new mission:</h4></html>"));
-        addMissionBox.add(new JLabel("Mission content:"));
-        JTextField missionContent = new JTextField(20);
+        addMissionBox.add(new CuteLabel("<html><h4>Add a new mission:</h4></html>"));
+        addMissionBox.add(new CuteLabel("Mission content:"));
+        CuteTextField missionContent = new CuteTextField(20);
         Dimension maxDimension = new Dimension(Integer.MAX_VALUE, missionContent.getPreferredSize().height);
         missionContent.setMaximumSize(maxDimension);
         addMissionBox.add(missionContent);
 
-        addMissionBox.add(new JLabel("Mission reward:"));
-        JTextField missionReward = new JTextField(10);
+        addMissionBox.add(new CuteLabel("Mission reward:"));
+        CuteTextField missionReward = new CuteTextField(10);
         missionReward.setMaximumSize(maxDimension);
         addMissionBox.add(missionReward);
 
@@ -90,11 +90,12 @@ public class AdminPage extends JPanel {
                 this.initMissionPanel(baseFrame);
             }
             else {
-                this.add(new JLabel("<html><h2>You have no access to this page.</h2></html>"));
+                this.add(new CuteLabel("<html><h2>You have no access to this page.</h2></html>"));
             }
         }
         else {
-            this.add(new JLabel("<html><h2>Please login first :)</h2></html>"));
+            this.add(new CuteLabel("<html><h2>Please login first :)</h2></html>"));
         }
     }    
 }
+

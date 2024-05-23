@@ -9,30 +9,35 @@ import javax.swing.*;
 import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
 
-import com.virtual_bank.gui.common.Button;;
+import com.virtual_bank.gui.common.*;
+import com.virtual_bank.gui.common.Button;
+;
 
-public class LoginPage extends JPanel {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+public class LoginPage extends CutePanel {
+    private CuteTextField usernameField;
+    private CutePasswordField passwordField;
     private Button loginButton;
-    private JLabel messageLabel;
+    private Label messageLabel;
 
     public LoginPage(BaseFrame baseFrame) {
-        JPanel panel = new JPanel();
+        CutePanel panel = new CutePanel();
+        Dimension fieldHeight = new Dimension(Integer.MAX_VALUE, 40);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
-        panel.add(new JLabel("Username:"));
-        this.usernameField = new JTextField(20);
+        panel.add(new CuteLabel("Username:"));
+        this.usernameField = new CuteTextField(0);
+        this.usernameField.setMaximumSize(fieldHeight);
         panel.add(usernameField);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
+        panel.add(Box.createRigidArea(new Dimension(0, 0)));
 
-        panel.add(new JLabel("Password:"));
-        this.passwordField = new JPasswordField(20);
+        panel.add(new CuteLabel("Password:"));
+        this.passwordField = new CutePasswordField(0);
+        this.passwordField.setMaximumSize(fieldHeight);
         panel.add(passwordField);
-        panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        
-        this.messageLabel = new JLabel();
+        panel.add(Box.createRigidArea(new Dimension(0, 0)));
+
+        this.messageLabel = new Label();
         panel.add(messageLabel);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
 
@@ -44,7 +49,7 @@ public class LoginPage extends JPanel {
                 String password = new String(passwordField.getPassword());
                 User user = XMLDBManager.findUser(username);
                 boolean success = user != null && user.getPasswd().equals(password);
-                
+
                 if (success) {
                     messageLabel.setText("Successfully login.");
                     baseFrame.sessionManager.login(user.getUid(), user.getName());
