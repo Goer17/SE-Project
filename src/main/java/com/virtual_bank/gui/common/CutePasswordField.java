@@ -14,12 +14,12 @@ public class CutePasswordField extends JPasswordField {
     public CutePasswordField(int columns) {
         super(columns);
         setFont(new Font("Comic Sans MS", Font.BOLD, 18));  // Setting a cute font
-        setBackground(new Color(255, 240, 245));            // Setting a light pink background
-        setForeground(new Color(241, 156, 103));            // Setting a deep pink foreground
-        setCaretColor(new Color(239, 198, 153));            // Setting the caret color to match the foreground
+        setBackground(new Color(255, 153, 0, 60));            // Setting a light pink background
+        setForeground(new Color(66, 133, 244, 190));            // Setting a deep pink foreground
+        setCaretColor(new Color(255, 153, 0, 60));            // Setting the caret color to match the foreground
         setOpaque(false);                                   // Making the field transparent
         setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(176, 70, 8), 2),
+                BorderFactory.createLineBorder(new Color(5, 57, 96), 2),
                 BorderFactory.createEmptyBorder(0, 5, 0, 5)
         ));                                                 // Adding a pink border and padding
     }

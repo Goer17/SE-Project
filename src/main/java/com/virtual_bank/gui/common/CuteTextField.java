@@ -18,9 +18,9 @@ public class CuteTextField extends JTextField {
     public CuteTextField(int columns) {
         super(columns);
         setFont(new Font("Comic Sans MS", Font.BOLD, 18));  // Using a "cute" font
-        setBackground(new Color(255, 240, 245));            // Setting a light pink background
-        setForeground(new Color(109, 215, 231));            // Setting text color to deep pink
-        setCaretColor(new Color(137, 232, 133));            // Setting caret color to deep pink
+        setBackground(new Color(153, 227, 109, 60));            // Setting a light pink background
+        setForeground(new Color(76, 188, 206, 255));            // Setting text color to deep pink
+        setCaretColor(new Color(153, 227, 109, 60));            // Setting caret color to deep pink
         setOpaque(false);                                   // Making the text field transparent
 //        setBorder(new EmptyBorder(10, 10, 10, 10));         // Adding padding
 
@@ -28,13 +28,13 @@ public class CuteTextField extends JTextField {
         addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                setBackground(new Color(255, 228, 225));    // Slightly darker pink when focused
+                setBackground(new Color(194, 243, 147));    // Slightly darker pink when focused
                 repaint();
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                setBackground(new Color(255, 240, 245));    // Restore the background color when focus is lost
+                setBackground(new Color(153, 227, 109, 60));    // Restore the background color when focus is lost
                 repaint();
             }
         });

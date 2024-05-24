@@ -13,9 +13,9 @@ public class CuteTextArea extends JTextArea {
     // Constructor to set the default style of the text area with specific rows and columns
     public CuteTextArea(int rows, int columns) {
         super(rows, columns);
-        setFont(new Font("Comic Sans MS", Font.PLAIN, 10));  // Setting a cute font
-        setBackground(new Color(217, 245, 202));            // Setting a cute green background
-        setForeground(new Color(0, 92, 203));                         // Setting text color to black
+        setFont(new Font("Comic Sans MS", Font.PLAIN, 14));  // Setting a cute font
+        setBackground(new Color(217, 245, 202, 119));            // Setting a cute green background
+        setForeground(new Color(7, 56, 119));                         // Setting text color to black
         setCaretColor(Color.BLACK);                         // Setting caret color to black
         setLineWrap(true);                                  // Enable line wrapping
         setWrapStyleWord(true);                             // Wrap at word boundaries

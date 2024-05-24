@@ -14,7 +14,7 @@ public class CuteLabel extends JLabel {
     public CuteLabel(String text) {
         super(text);
         setFont(new Font("Comic Sans MS", Font.BOLD, 18));  // 使用"可爱"的字体
-        setForeground(new Color(34, 92, 248));            // 设置文本颜色为浅黄色
+        setForeground(new Color(177, 134, 253));            // 设置文本颜色为浅黄色
         setOpaque(false);                                   // 设置为不透明，这样才能绘制自定义背景
         setBorder(new EmptyBorder(10, 20, 10, 20));         // 添加内边距
     }

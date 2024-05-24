@@ -18,8 +18,8 @@ public class CuteScrollPane extends JScrollPane {
 
         @Override
         protected void configureScrollBarColors() {
-            this.thumbColor = new Color(255, 182, 193); // Light pink for the thumb
-            this.trackColor = new Color(255, 240, 245); // Light pink for the track
+            this.thumbColor = new Color(204, 187, 77, 255); // Light pink for the thumb
+            this.trackColor = new Color(194, 177, 106, 116); // Light pink for the track
         }
 
         @Override

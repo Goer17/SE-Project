@@ -15,7 +15,7 @@ public class Button extends JButton {
     public Button(String label) {
         super(label);
         setFont(new Font("Comic Sans MS", Font.BOLD, 18));  // 使用更"可爱"的字体
-        setBackground(new Color(255, 182, 193));           // 设置淡粉色背景
+        setBackground(new Color(183, 222, 255));           // 设置淡粉色背景
         setForeground(Color.WHITE);                        // 设置文字颜色
         setFocusPainted(false);                            // 去除焦点的边框
         setContentAreaFilled(false);                       // 不在绘制按钮区域内填充背景色
@@ -25,12 +25,12 @@ public class Button extends JButton {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setBackground(new Color(239, 103, 125)); // 鼠标悬停时的背景颜色
+                setBackground(new Color(87 , 149, 248)); // 鼠标悬停时的背景颜色
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(new Color(255, 182, 193)); // 鼠标离开后恢复背景颜色
+                setBackground(new Color(183, 222, 255)); // 鼠标离开后恢复背景颜色
             }
         });
     }
