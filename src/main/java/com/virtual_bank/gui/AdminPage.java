@@ -36,6 +36,7 @@ public class AdminPage extends JPanel {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BoxLayout(missionPanel, BoxLayout.Y_AXIS));
         this.missionPanel.add(new CuteLabel("<html><h3>Missions</h3></html>"));
+        this.missionPanel.setPreferredSize(new Dimension(300, 0));
 
         List<Mission> missions = XMLDBManager.getMissionsList();
         DefaultListModel<String> missionModel = new DefaultListModel<>();

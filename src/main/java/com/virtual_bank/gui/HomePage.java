@@ -51,6 +51,7 @@ public class HomePage extends JPanel {
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BorderLayout());
+        this.missionPanel.setPreferredSize(new Dimension(450, 0));
 
         JPanel missionTitlePanel = new JPanel();
         missionTitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -74,6 +75,17 @@ public class HomePage extends JPanel {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // Your action listener code here
+                        XMLDBManager.eraseMission(mission.getMid());
+                        String username = baseFrame.sessionManager.getUsername();
+                        User user = XMLDBManager.findUser(username);
+                        int money = user.getMoney() + mission.getReward();
+                        user.setMoney(money);
+                        XMLDBManager.saveUser(user);
+
+                        Transaction transaction = new Transaction(user.getUid(), mission.getContent(), mission.getReward());
+                        XMLDBManager.addTransaction(transaction);
+
+                        baseFrame.refresh();
                     }
                 });
                 itemPanel.add(label);
