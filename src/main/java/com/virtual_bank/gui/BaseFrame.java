@@ -12,8 +12,8 @@ import com.virtual_bank.gui.common.*;
 import com.virtual_bank.gui.common.Button;
 
 public class BaseFrame extends JFrame implements ActionListener {
-    protected CutePanel navigationPanel;
-    protected CutePanel contentPanel;
+    protected JPanel navigationPanel;
+    protected JPanel contentPanel;
     protected CardLayout cardLayout;
     protected SessionManager sessionManager;
 
@@ -21,9 +21,9 @@ public class BaseFrame extends JFrame implements ActionListener {
         this.sessionManager = sessionManager;
         
         this.cardLayout = new CardLayout();
-        this.contentPanel = new CutePanel(cardLayout);
+        this.contentPanel = new JPanel(cardLayout);
 
-        this.navigationPanel = new CutePanel();
+        this.navigationPanel = new JPanel();
         this.navigationPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         this.setTitle("Virtual Bank");

@@ -12,14 +12,14 @@ import java.util.List;
 import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
 import com.virtual_bank.gui.common.Button;
-import com.virtual_bank.gui.common.CutePanel;
+//import com.virtual_bank.gui.common.CutePanel;
 import com.virtual_bank.gui.common.CuteTextField;
 
 public class FixedDepositDialog extends JDialog {
     private CuteTextField depositAmountField;
     private CuteTextField depositDurationField;
     private Button createButton;
-    private CutePanel contentPanel;
+    private JPanel contentPanel;
     private Label headerLabel;
 
     private List<ActionListener> listeners = new ArrayList<>();
@@ -49,7 +49,7 @@ public class FixedDepositDialog extends JDialog {
         getContentPane().add(headerLabel, BorderLayout.NORTH);
 
         // Main content panel
-        contentPanel =  new CutePanel();
+        contentPanel =  new JPanel();
         contentPanel.setLayout(new GridLayout(0, 2, 10, 5)); // Dynamic rows, 2 columns
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
@@ -68,7 +68,7 @@ public class FixedDepositDialog extends JDialog {
         getContentPane().add(contentPanel, BorderLayout.CENTER);
 
         // Button panel
-        CutePanel buttonPanel = new CutePanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         createButton = new Button("Create Deposit");
 //        createButton.setFont(new Font("Serif", Font.PLAIN, 15));
         createButton.addActionListener(e -> createFixedDeposit(currentUser));

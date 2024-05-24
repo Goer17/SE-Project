@@ -9,17 +9,18 @@ import javax.swing.*;
 
 import com.virtual_bank.core.*;
 import com.virtual_bank.gui.common.Button;
+import com.virtual_bank.gui.common.CuteLabel;
 import com.virtual_bank.gui.common.CuteList;
-import com.virtual_bank.gui.common.CutePanel;
+//import com.virtual_bank.gui.common.CutePanel;
 import com.virtual_bank.gui.common.CuteScrollPane;
 
 public class HomePage extends JPanel {
     private JPanel missionPanel;
-    private CutePanel missionListPanel;
-    private CutePanel targetPanel;
+    private JPanel missionListPanel;
+    private JPanel targetPanel;
 
     private void addItem(Mission mission, BaseFrame baseFrame) {
-        CutePanel itemPanel = new CutePanel();
+        JPanel itemPanel = new JPanel();
         itemPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         String description = mission.description();
@@ -50,14 +51,14 @@ public class HomePage extends JPanel {
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BoxLayout(this.missionPanel, BoxLayout.Y_AXIS));
-        this.missionListPanel = new CutePanel();
+        this.missionListPanel = new JPanel();
         this.missionListPanel.setLayout(new BoxLayout(this.missionListPanel, BoxLayout.Y_AXIS));
         List<Mission> missions = XMLDBManager.getMissionsList();
         if (missions.size() > 0) {
-            this.missionPanel.add(new JLabel("<html><h3>Missions:</h3></html>"));
+            this.missionPanel.add(new CuteLabel("<html><h3>Missions:</h3></html>"));
         }
         else {
-            this.missionPanel.add(new JLabel("<html><h3>Missions: Empty</h3></html>"));
+            this.missionPanel.add(new CuteLabel("<html><h3>Missions: Empty</h3></html>"));
         }
         for (int i = 0; i < missions.size(); i++) {
             this.addItem(missions.get(i), baseFrame);
@@ -67,7 +68,7 @@ public class HomePage extends JPanel {
     }
 
     private void initTargetPanel(BaseFrame baseFrame) {
-        this.targetPanel = new CutePanel();
+        this.targetPanel = new JPanel();
         this.targetPanel.setLayout(new BorderLayout());
         List<Integer> targets = XMLDBManager.getTargets();
         String username = baseFrame.sessionManager.getUsername();

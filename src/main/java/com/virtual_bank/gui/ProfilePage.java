@@ -9,11 +9,11 @@ import java.util.List;
 
 import com.virtual_bank.core.*;
 import com.virtual_bank.gui.common.Button;
-import com.virtual_bank.gui.common.CutePanel;
+//import com.virtual_bank.gui.common.CutePanel;
 import com.virtual_bank.gui.common.CuteTextArea;
 
 public class ProfilePage extends JPanel {
-    private CutePanel balanceLabel;
+    private JPanel balanceLabel;
     private CuteTextArea transactionsArea;
     private CuteTextArea fixedDepositsArea;
     private Button fixedDepositButton;
@@ -28,7 +28,7 @@ public class ProfilePage extends JPanel {
             int money = XMLDBManager.findUser(username).getMoney();
             XMLDBManager.processMaturedDepositsForUser(currentUser.getUid());
 
-            balanceLabel = new CutePanel();
+            balanceLabel = new JPanel();
             balanceLabel.add(new JLabel(getBalanceHtml(username, money)), BorderLayout.CENTER);
             this.add(balanceLabel, BorderLayout.WEST);
 

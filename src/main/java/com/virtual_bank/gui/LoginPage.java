@@ -13,29 +13,26 @@ import com.virtual_bank.gui.common.*;
 import com.virtual_bank.gui.common.Button;
 ;
 
-public class LoginPage extends CutePanel {
+public class LoginPage extends JPanel {
     private CuteTextField usernameField;
     private CutePasswordField passwordField;
     private Button loginButton;
     private Label messageLabel;
 
     public LoginPage(BaseFrame baseFrame) {
-        CutePanel panel = new CutePanel();
-        Dimension fieldHeight = new Dimension(Integer.MAX_VALUE, 40);
+        JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         panel.add(new CuteLabel("Username:"));
-        this.usernameField = new CuteTextField(0);
-        this.usernameField.setMaximumSize(fieldHeight);
+        this.usernameField = new CuteTextField(20);
         panel.add(usernameField);
-        panel.add(Box.createRigidArea(new Dimension(0, 0)));
+        panel.add(Box.createRigidArea(new Dimension(0, 5)));
 
         panel.add(new CuteLabel("Password:"));
-        this.passwordField = new CutePasswordField(0);
-        this.passwordField.setMaximumSize(fieldHeight);
+        this.passwordField = new CutePasswordField(20);
         panel.add(passwordField);
-        panel.add(Box.createRigidArea(new Dimension(0, 0)));
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         this.messageLabel = new Label();
         panel.add(messageLabel);
