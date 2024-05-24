@@ -45,7 +45,7 @@ public class RegisterPage extends JPanel {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 if (password.length() < 6) {
-                    messageLabel.setText("Your password should contain at least 6 characters.");
+                    messageLabel.setText("Password should be more than 6 characters");
                     return;
                 }
 
@@ -58,7 +58,7 @@ public class RegisterPage extends JPanel {
                     baseFrame.sessionManager.login(user.getUid(), user.getName());
                     baseFrame.refresh();
                 } else {
-                    messageLabel.setText("Your username is duplicate. Please try another one.");
+                    messageLabel.setText("Your username is duplicate.");
                 }
             }
         });

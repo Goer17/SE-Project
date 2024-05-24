@@ -53,7 +53,7 @@ public class LoginPage extends JPanel {
                     baseFrame.refresh();
                 }
                 else {
-                    messageLabel.setText("Your username or password is incorrect, please try again!");
+                    messageLabel.setText("Your username or password is incorrect!");
                 }
             }
         });
