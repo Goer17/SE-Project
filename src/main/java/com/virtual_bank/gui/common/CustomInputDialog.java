@@ -20,6 +20,7 @@ public class CustomInputDialog extends JDialog {
     private void initComponents() {
         textField = new CuteTextField(20);
         Button okButton = new Button("OK");
+        CuteLabel label = new CuteLabel("Please enter the amount:");
 
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -29,13 +30,23 @@ public class CustomInputDialog extends JDialog {
         });
 
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(textField, BorderLayout.CENTER);
-        panel.add(okButton, BorderLayout.SOUTH);
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JPanel inputPanel = new JPanel(new BorderLayout());
+        inputPanel.add(label, BorderLayout.NORTH);
+        inputPanel.add(textField, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(okButton);
+
+        panel.add(inputPanel, BorderLayout.CENTER);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
         setContentPane(panel);
         pack();
         setLocationRelativeTo(null);
     }
+
 
     public String showDialog() {
         setVisible(true);
