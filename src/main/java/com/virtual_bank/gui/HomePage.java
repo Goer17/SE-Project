@@ -50,22 +50,44 @@ public class HomePage extends JPanel {
 
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
-        this.missionPanel.setLayout(new BoxLayout(this.missionPanel, BoxLayout.Y_AXIS));
-        this.missionListPanel = new JPanel();
-        this.missionListPanel.setLayout(new BoxLayout(this.missionListPanel, BoxLayout.Y_AXIS));
+        this.missionPanel.setLayout(new BorderLayout());
+
+        JPanel missionTitlePanel = new JPanel();
+        missionTitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        missionTitlePanel.add(new CuteLabel("<html><h3>Missions:</h3></html>"));
+        this.missionPanel.add(missionTitlePanel, BorderLayout.NORTH);
+
+        JPanel missionContentPanel = new JPanel();
+        missionContentPanel.setLayout(new BoxLayout(missionContentPanel, BoxLayout.Y_AXIS));
+
         List<Mission> missions = XMLDBManager.getMissionsList();
-        if (missions.size() > 0) {
-            this.missionPanel.add(new CuteLabel("<html><h3>Missions:</h3></html>"));
+        if (missions.size() == 0) {
+            missionContentPanel.add(new CuteLabel("<html><h3>No missions available</h3></html>"));
+        } else {
+            for (Mission mission : missions) {
+                JPanel itemPanel = new JPanel();
+                itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+                String description = mission.description();
+                CuteLabel label = new CuteLabel(description);
+                Button button = new Button("Done");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Your action listener code here
+                    }
+                });
+                itemPanel.add(label);
+                itemPanel.add(button);
+                missionContentPanel.add(itemPanel);
+            }
         }
-        else {
-            this.missionPanel.add(new CuteLabel("<html><h3>Missions: Empty</h3></html>"));
-        }
-        for (int i = 0; i < missions.size(); i++) {
-            this.addItem(missions.get(i), baseFrame);
-        }
-        missionPanel.add(missionListPanel);
+
+        CuteScrollPane missionScrollPane = new CuteScrollPane(missionContentPanel);
+        this.missionPanel.add(missionScrollPane, BorderLayout.CENTER);
+
         this.add(this.missionPanel, BorderLayout.EAST);
     }
+
 
     private void initTargetPanel(BaseFrame baseFrame) {
         this.targetPanel = new JPanel();

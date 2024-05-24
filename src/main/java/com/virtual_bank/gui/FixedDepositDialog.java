@@ -13,6 +13,7 @@ import com.virtual_bank.core.User;
 import com.virtual_bank.core.XMLDBManager;
 import com.virtual_bank.gui.common.Button;
 //import com.virtual_bank.gui.common.CutePanel;
+import com.virtual_bank.gui.common.CuteLabel;
 import com.virtual_bank.gui.common.CuteTextField;
 
 public class FixedDepositDialog extends JDialog {
@@ -20,7 +21,7 @@ public class FixedDepositDialog extends JDialog {
     private CuteTextField depositDurationField;
     private Button createButton;
     private JPanel contentPanel;
-    private Label headerLabel;
+    private CuteLabel headerLabel;
 
     private List<ActionListener> listeners = new ArrayList<>();
 
@@ -38,12 +39,12 @@ public class FixedDepositDialog extends JDialog {
 
     public FixedDepositDialog(Frame owner, User currentUser) {
         super(owner, "Create Fixed Deposit", true);
-        setSize(350, 220);
+        setSize(700, 300);
         setLocationRelativeTo(owner);
         getContentPane().setLayout(new BorderLayout(10, 10));
 
         // Header panel with title
-        headerLabel = new Label("New Fixed Deposit", JLabel.CENTER);
+        headerLabel = new CuteLabel("New Fixed Deposit");
 //        headerLabel.setFont(new Font("Serif", Font.BOLD, 20));
 //        headerLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         getContentPane().add(headerLabel, BorderLayout.NORTH);
@@ -54,13 +55,13 @@ public class FixedDepositDialog extends JDialog {
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
         // Adding amount label and field
-        Label amountLabel = new Label("Amount:");
+        CuteLabel amountLabel = new CuteLabel("Amount:");
         depositAmountField = new CuteTextField(10);
         contentPanel.add(amountLabel);
         contentPanel.add(depositAmountField);
 
         // Adding duration label and field
-        Label durationLabel = new Label("Duration (months):");
+        CuteLabel durationLabel = new CuteLabel("Duration (months):");
         depositDurationField =  new CuteTextField(10);
         contentPanel.add(durationLabel);
         contentPanel.add(depositDurationField);
