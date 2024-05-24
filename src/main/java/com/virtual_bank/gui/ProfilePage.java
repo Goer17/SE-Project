@@ -10,6 +10,7 @@ import java.util.List;
 import com.virtual_bank.core.*;
 import com.virtual_bank.gui.common.Button;
 //import com.virtual_bank.gui.common.CutePanel;
+import com.virtual_bank.gui.common.CustomInputDialog;
 import com.virtual_bank.gui.common.CuteTextArea;
 
 public class ProfilePage extends JPanel {
@@ -17,6 +18,8 @@ public class ProfilePage extends JPanel {
     private CuteTextArea transactionsArea;
     private CuteTextArea fixedDepositsArea;
     private Button fixedDepositButton;
+    private Button depositButton;
+    private Button withdrawButton;
 
 
     public ProfilePage(BaseFrame baseFrame) {
@@ -92,7 +95,9 @@ public class ProfilePage extends JPanel {
 
     private void updateBalance(boolean isDeposit, BaseFrame baseFrame) {
         String transactionType = isDeposit ? "Deposit" : "Withdraw";
-        String input = JOptionPane.showInputDialog(this, "Enter amount to " + transactionType + ":");
+        CustomInputDialog dialog = new CustomInputDialog(null, transactionType, true);
+        String input = dialog.showDialog();
+
 
         if (input == null) {
             return; 
