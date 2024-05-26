@@ -1,3 +1,21 @@
+package com.virtual_bank.gui;
+import com.virtual_bank.core.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.virtual_bank.core.User;
+import com.virtual_bank.core.XMLDBManager;
+import com.virtual_bank.gui.common.Button;
+import com.virtual_bank.gui.common.CuteLabel;
+import com.virtual_bank.gui.common.CuteTextField;
+// 包导入
+
 public class FixedDepositDialog extends JDialog {
     private CuteTextField depositAmountField;  // 存款金额字段
     private CuteTextField depositDurationField;  // 存款期限字段
