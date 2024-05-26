@@ -18,6 +18,7 @@ import org.w3c.dom.*;
 public class XMLDBManager {
     private XMLDBManager() {}
 
+    // 读取XML文件并返回Document对象
     private static Document readXML(String path) {
         try {
             File file = new File(path);
@@ -31,7 +32,8 @@ public class XMLDBManager {
 
         return null;
     }
-
+    
+    // 将Document对象保存为XML文件
     private static void saveXML(Document doc, String path) {
         try {
             File file = new File(path);
@@ -45,6 +47,7 @@ public class XMLDBManager {
         catch (Exception e) {}
     }
 
+    // 添加用户到XML数据库
     public static boolean addUser(User user) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -87,6 +90,7 @@ public class XMLDBManager {
         return true;
     }
 
+    // 查找用户
     public static User findUser(String username) {
         final String path = "../db/users.xml";
         Document doc = readXML(path); 
@@ -105,9 +109,10 @@ public class XMLDBManager {
             }
         }
 
-        return null; // Not found
+        return null;
     }
 
+    // 获取所有用户
     public static List<User> getAllUsers(Boolean sort) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -141,6 +146,7 @@ public class XMLDBManager {
         return users;
     }
 
+    // 保存用户信息到XML数据库
     public static boolean saveUser(User user) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -166,6 +172,7 @@ public class XMLDBManager {
         return false;
     }
 
+    // 添加交易记录到XML数据库
     public static void addTransaction(Transaction transaction) {
         final String path = "../db/records.xml"; 
         Document doc = readXML(path);
@@ -190,7 +197,8 @@ public class XMLDBManager {
     
         saveXML(doc, path);
     }
-    
+
+    // 获取特定用户的交易记录
     public static List<Transaction> getTransactionsForUser(String uid) {
         final String path = "../db/records.xml";
         Document doc = readXML(path);
@@ -218,8 +226,9 @@ public class XMLDBManager {
         }
     
         return transactions;
-    }
-
+    }   
+    
+    // 添加任务到XML数据库
     public static Boolean addMission(Mission mission) {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -257,7 +266,8 @@ public class XMLDBManager {
 
         return true;
     }
-
+    
+    // 删除任务
     public static void eraseMission(String mid) {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -278,6 +288,7 @@ public class XMLDBManager {
         saveXML(doc, path);
     }
 
+    // 获取所有任务列表
     public static List<Mission> getMissionsList() {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -300,7 +311,8 @@ public class XMLDBManager {
 
         return missions;
     }
-    
+
+    // 获取目标列表
     public static List<Integer> getTargets() {
         final String path = "../db/targets.xml";
         ArrayList<Integer> targets = new ArrayList<>();
@@ -320,6 +332,7 @@ public class XMLDBManager {
         return targets;
     }
 
+    // 添加定期存款到XML数据库
     public static boolean addFixedDeposit(FixedDeposit deposit) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
@@ -350,7 +363,8 @@ public class XMLDBManager {
     
         return true;
     }
-
+    
+    // 获取特定用户的定期存款列表
     public static List<FixedDeposit> getFixedDepositsForUser(String uid) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
@@ -378,6 +392,7 @@ public class XMLDBManager {
         return deposits;
     }
 
+    // 根据UID查找用户
     public static User findUserByUid(String uid) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -399,7 +414,7 @@ public class XMLDBManager {
         return null;
     }
     
-
+    // 处理用户的到期定期存款
     public static void processMaturedDepositsForUser(String uid) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
