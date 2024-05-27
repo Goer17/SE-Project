@@ -7,7 +7,8 @@ public class CuteTextArea extends JTextArea {
 
     // Constructor to set the default style of the text area
     public CuteTextArea() {
-        this(10, 40); // Default rows and columns
+        this(10, 40);
+        // Default rows and columns
     }
 
     // Constructor to set the default style of the text area with specific rows and columns

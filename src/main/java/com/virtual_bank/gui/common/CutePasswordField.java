@@ -5,46 +5,50 @@ import java.awt.*;
 
 public class CutePasswordField extends JPasswordField {
 
-    // Constructor to set the default style of the password field
+    // 密码框
     public CutePasswordField() {
-        this(2); // Default column size
+        this(2);
     }
 
-    // Constructor to set the default style of the password field with specific columns
+    // 密码框
     public CutePasswordField(int columns) {
         super(columns);
-        setFont(new Font("Comic Sans MS", Font.BOLD, 18));  // Setting a cute font
-        setBackground(new Color(255, 153, 0, 60));            // Setting a light pink background
-        setForeground(new Color(66, 133, 244, 190));            // Setting a deep pink foreground
-        setCaretColor(new Color(255, 153, 0, 60));            // Setting the caret color to match the foreground
-        setOpaque(false);                                   // Making the field transparent
+        setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+        // 字体
+        setBackground(new Color(255, 153, 0, 60));
+        // 背景
+        setForeground(new Color(66, 133, 244, 190));
+        // 前景
+        setCaretColor(new Color(255, 153, 0, 60));
+        // 插入符
+        setOpaque(false);
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(5, 57, 96), 2),
+                // 粉色边框，内边距
                 BorderFactory.createEmptyBorder(0, 5, 0, 5)
-        ));                                                 // Adding a pink border and padding
+        ));
     }
 
-    // Overriding the paintComponent method to support rounded corners
+    // 圆角
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Draw the rounded rectangle background
+        // 背景
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
 
-        // Draw the text with the existing rendering pipeline
         super.paintComponent(g);
     }
 
-    // Overriding the paintBorder method to support rounded corners
+    // 圆角
     @Override
     protected void paintBorder(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Draw the rounded rectangle border
+        // 边框
         g2.setColor(getForeground());
         g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
     }

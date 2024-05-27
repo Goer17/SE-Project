@@ -18,6 +18,7 @@ import org.w3c.dom.*;
 public class XMLDBManager {
     private XMLDBManager() {}
 
+    // Reads the XML file and returns the Document object
     private static Document readXML(String path) {
         try {
             File file = new File(path);
@@ -31,7 +32,8 @@ public class XMLDBManager {
 
         return null;
     }
-
+    
+    // Save the Document object as an XML file
     private static void saveXML(Document doc, String path) {
         try {
             File file = new File(path);
@@ -45,6 +47,7 @@ public class XMLDBManager {
         catch (Exception e) {}
     }
 
+    // add user to XML database
     public static boolean addUser(User user) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -87,6 +90,7 @@ public class XMLDBManager {
         return true;
     }
 
+    // find specific user
     public static User findUser(String username) {
         final String path = "../db/users.xml";
         Document doc = readXML(path); 
@@ -105,9 +109,10 @@ public class XMLDBManager {
             }
         }
 
-        return null; // Not found
+        return null;
     }
 
+    // get all users
     public static List<User> getAllUsers(Boolean sort) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -141,6 +146,7 @@ public class XMLDBManager {
         return users;
     }
 
+    // Save user information to an XML database
     public static boolean saveUser(User user) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -166,6 +172,7 @@ public class XMLDBManager {
         return false;
     }
 
+    // Add transaction records to the XML database
     public static void addTransaction(Transaction transaction) {
         final String path = "../db/records.xml"; 
         Document doc = readXML(path);
@@ -190,7 +197,8 @@ public class XMLDBManager {
     
         saveXML(doc, path);
     }
-    
+
+    // Get the transaction history of a specific user
     public static List<Transaction> getTransactionsForUser(String uid) {
         final String path = "../db/records.xml";
         Document doc = readXML(path);
@@ -218,8 +226,9 @@ public class XMLDBManager {
         }
     
         return transactions;
-    }
-
+    }   
+    
+    // Add a task to an XML database
     public static Boolean addMission(Mission mission) {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -257,7 +266,8 @@ public class XMLDBManager {
 
         return true;
     }
-
+    
+    // delete the tasks list
     public static void eraseMission(String mid) {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -278,6 +288,7 @@ public class XMLDBManager {
         saveXML(doc, path);
     }
 
+    // get missions list
     public static List<Mission> getMissionsList() {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -300,7 +311,8 @@ public class XMLDBManager {
 
         return missions;
     }
-    
+
+    // get targets list
     public static List<Integer> getTargets() {
         final String path = "../db/targets.xml";
         ArrayList<Integer> targets = new ArrayList<>();
@@ -320,6 +332,7 @@ public class XMLDBManager {
         return targets;
     }
 
+    // Add time deposits to the XML database
     public static boolean addFixedDeposit(FixedDeposit deposit) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
@@ -350,7 +363,8 @@ public class XMLDBManager {
     
         return true;
     }
-
+    
+    // Get a list of fixed deposits for specific users
     public static List<FixedDeposit> getFixedDepositsForUser(String uid) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
@@ -378,6 +392,7 @@ public class XMLDBManager {
         return deposits;
     }
 
+    // Find a user based on UID
     public static User findUserByUid(String uid) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -399,7 +414,7 @@ public class XMLDBManager {
         return null;
     }
     
-
+    // Process the user's maturity time deposits
     public static void processMaturedDepositsForUser(String uid) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);

@@ -21,40 +21,40 @@ public class RegisterPage extends JPanel {
 
     public RegisterPage(BaseFrame baseFrame) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Set layout 
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Set border
 
-        panel.add(new CuteLabel("Username:"));
+        panel.add(new CuteLabel("Username:")); 
         this.usernameField = new CuteTextField(20);
         panel.add(usernameField);
-        panel.add(Box.createRigidArea(new Dimension(0, 5)));
+        panel.add(Box.createRigidArea(new Dimension(0, 5))); // Vertical spacing
 
-        panel.add(new CuteLabel("Password:"));
+        panel.add(new CuteLabel("Password:")); 
         this.passwordField = new CutePasswordField(20);
         panel.add(passwordField);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        this.messageLabel = new Label();
+        this.messageLabel = new Label(); 
         panel.add(messageLabel);
         panel.add(Box.createRigidArea(new Dimension(0, 5)));
 
-        this.registerButton = new Button("Register");
-        this.registerButton.addActionListener(new ActionListener() {
+        this.registerButton = new Button("Register"); // Register button
+        this.registerButton.addActionListener(new ActionListener() { // Click event
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-                if (password.length() < 6) {
-                    messageLabel.setText("Password should be more than 6 characters");
-                    return;
+                String username = usernameField.getText(); // Get entered username
+                String password = new String(passwordField.getPassword()); // Get entered password
+                if (password.length() < 6) { // Check password length
+                    messageLabel.setText("Password should be more than 6 characters"); 
+                    return; 
                 }
 
                 User user = new User("#new", username, password, 0);
 
-                boolean success = XMLDBManager.addUser(user);
+                boolean success = XMLDBManager.addUser(user); // Add user to the database
 
                 if (success) {
-                    messageLabel.setText("Successfull register.");
+                    messageLabel.setText("Successful register.");
                     baseFrame.sessionManager.login(user.getUid(), user.getName());
                     baseFrame.refresh();
                 } else {
@@ -67,3 +67,4 @@ public class RegisterPage extends JPanel {
         this.add(panel);
     }
 }
+

@@ -11,22 +11,30 @@ public class CuteList<E> extends JList<E> {
     // Constructor to set the default style of the list
     public CuteList(ListModel<E> model) {
         super(model);
-        setFont(new Font("Comic Sans MS", Font.BOLD, 18));  // Using a "cute" font
-        setBackground(new Color(246, 242, 194, 255));            // Setting a light pink background
-        setForeground(new Color(66, 133, 244, 190));            // Setting text color to deep pink
-        setSelectionBackground(new Color(115, 12, 12));   // Setting selection background color to light pink
-        setSelectionForeground(Color.WHITE);                // Setting selection text color to white
+        setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+        // Using a "cute" font
+        setBackground(new Color(246, 242, 194, 255));
+        // Setting a light pink background
+        setForeground(new Color(66, 133, 244, 190));
+        // Setting text color to deep pink
+        setSelectionBackground(new Color(115, 12, 12));
+        // Setting selection background color to light pink
+        setSelectionForeground(Color.WHITE);
+        // Setting selection text color to white
         setCellRenderer(new CuteListCellRenderer<>());
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setBackground(new Color(246, 242, 194, 255)); // Slightly darker pink when mouse hovers
+                setBackground(new Color(246, 242, 194, 255));
+
+                // Slightly darker pink when mouse hovers
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(new Color(246, 242, 194, 255)); // Restore the background color when mouse exits
+                setBackground(new Color(246, 242, 194, 255));
+                // Restore the background color when mouse exits
             }
         });
     }
@@ -38,8 +46,10 @@ public class CuteList<E> extends JList<E> {
             Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
             if (component instanceof JLabel label) {
-                label.setOpaque(false); // Making label transparent to allow custom painting
-                label.setBorder(new EmptyBorder(10, 20, 10, 20)); // Adding padding
+                label.setOpaque(false);
+                // Making label transparent to allow custom painting
+                label.setBorder(new EmptyBorder(10, 20, 10, 20));
+                // Adding padding
             }
             return component;
         }

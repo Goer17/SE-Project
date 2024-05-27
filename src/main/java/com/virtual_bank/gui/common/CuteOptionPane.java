@@ -11,12 +11,16 @@ public class CuteOptionPane {
         // Create a JPanel to contain the message and buttons
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(255, 240, 245)); // Light pink background
+        panel.setBackground(new Color(255, 240, 245));
+
+        // Light pink background
 
         // Create a JLabel to display the message
         JLabel messageLabel = new JLabel(message.toString());
-        messageLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 16)); // Cute font
-        messageLabel.setForeground(new Color(174, 221, 239)); // Deep pink foreground
+        messageLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+        // Cute font
+        messageLabel.setForeground(new Color(174, 221, 239));
+        // Deep pink foreground
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(messageLabel);
 
@@ -25,8 +29,10 @@ public class CuteOptionPane {
 
         // Create an "OK" button
         JButton okButton = new JButton("OK");
-        okButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14)); // Cute font
-        okButton.setBackground(new Color(1, 81, 108)); // Dark green background
+        okButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        // Cute font
+        okButton.setBackground(new Color(1, 81, 108));
+        // Dark green background
         okButton.setForeground(Color.WHITE); // White text
         okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         okButton.addActionListener(new ActionListener() {

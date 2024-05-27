@@ -3,23 +3,23 @@ package com.virtual_bank.core;
 import java.util.UUID;
 
 public class Mission {
-    private String mid;
-    private String content;
-    private int reward;
+    private String mid; // Task ID
+    private String content; 
+    private int reward; 
 
-    public String getMid() {
+    public String getMid() { 
         return mid;
     }
 
-    public void setMid(String mid) {
+    public void setMid(String mid) { 
         this.mid = mid;
     }
 
-    public String getContent() {
+    public String getContent() { 
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(String content) { 
         this.content = content;
     }
 
@@ -27,22 +27,22 @@ public class Mission {
         return reward;
     }
 
-    public void setReward(int reward) {
+    public void setReward(int reward) { 
         this.reward = reward;
     }
 
-    public Mission(String mid, String content, int reward) {
-        if ("#new".equals(mid)) {
+    public Mission(String mid, String content, int reward) { // Constructor, passing in the task ID, content, and reward
+        if ("#new".equals(mid)) { // If the task ID is "#new", a new unique task ID is generated
             this.setMid(UUID.randomUUID().toString());
         }
         else {
-            this.setMid(mid);
+            this.setMid(mid); // Otherwise, the passed task ID is used
         }
-        this.setContent(content);
-        this.setReward(reward);
+        this.setContent(content); // Set content
+        this.setReward(reward); // Set reward
     }
 
-    public String description() {
+    public String description() { // Description method, which returns a task description string
         return this.content + " (reward:" + this.reward + ")";
     }
 }

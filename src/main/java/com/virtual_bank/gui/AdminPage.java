@@ -10,15 +10,18 @@ import java.util.List;
 import com.virtual_bank.core.*;
 import com.virtual_bank.gui.common.*;
 
+
 public class AdminPage extends JPanel {
-    private JPanel rankPanel;
+    private JPanel rankPanel; 
     private JPanel missionPanel;
+
 
     private void initRankPanel() {
         this.rankPanel = new JPanel();
         this.rankPanel.setLayout(new BorderLayout());
         this.rankPanel.add(new CuteLabel("<html><h3>Rank</h3></html>"), BorderLayout.NORTH);
         
+        // Ranklist
         List<User> users = XMLDBManager.getAllUsers(true);
         DefaultListModel<String> rankModel = new DefaultListModel<>();
         for (int i = 0; i < users.size(); i++) {
@@ -32,12 +35,14 @@ public class AdminPage extends JPanel {
         this.add(this.rankPanel, BorderLayout.WEST);
     }
 
+    // mission panel
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BoxLayout(missionPanel, BoxLayout.Y_AXIS));
         this.missionPanel.add(new CuteLabel("<html><h3>Missions</h3></html>"));
         this.missionPanel.setPreferredSize(new Dimension(300, 0));
 
+        // get all mission
         List<Mission> missions = XMLDBManager.getMissionsList();
         DefaultListModel<String> missionModel = new DefaultListModel<>();
         for (Mission mission : missions) {
@@ -47,7 +52,8 @@ public class AdminPage extends JPanel {
         missionJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         CuteScrollPane scrollPane = new CuteScrollPane(missionJList);
         this.missionPanel.add(scrollPane);
-        
+
+        // add new mission
         JPanel addMissionBox = new JPanel();
         addMissionBox.setLayout(new BoxLayout(addMissionBox, BoxLayout.Y_AXIS));
 
@@ -63,6 +69,7 @@ public class AdminPage extends JPanel {
         missionReward.setMaximumSize(maxDimension);
         addMissionBox.add(missionReward);
 
+        // add task event
         Button addButton = new Button("Add");
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -82,21 +89,19 @@ public class AdminPage extends JPanel {
         this.add(this.missionPanel, BorderLayout.EAST);
     }
 
+    
     public AdminPage(BaseFrame baseFrame) {
         if (baseFrame.sessionManager.isLoggedIn()) {
             if ("admin".equals(baseFrame.sessionManager.getUsername())) {
                 this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
                 this.setLayout(new BorderLayout());
-                this.initRankPanel();
-                this.initMissionPanel(baseFrame);
+                this.initRankPanel(); 
+                this.initMissionPanel(baseFrame); 
+            } else {
+                this.add(new CuteLabel("<html><h2>You have no access to this page.</h2></html>")); // Non-administrators cannot access it
             }
-            else {
-                this.add(new CuteLabel("<html><h2>You have no access to this page.</h2></html>"));
-            }
-        }
-        else {
-            this.add(new CuteLabel("<html><h2>Please login first :)</h2></html>"));
+        } else {
+            this.add(new CuteLabel("<html><h2>Please login first :)</h2></html>")); // Message for users not logged in
         }
     }    
 }
-

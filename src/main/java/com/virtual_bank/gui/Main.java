@@ -6,9 +6,9 @@ import com.virtual_bank.core.SessionManager;
 
 public class Main {
     public static void main(String[] args) {
-        SessionManager sessionManager = SessionManager.getInstance();
+        SessionManager sessionManager = SessionManager.getInstance(); 
 
-        SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> { 
             new BaseFrame(sessionManager).setVisible(true);
         });
     }
