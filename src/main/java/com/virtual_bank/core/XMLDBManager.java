@@ -18,7 +18,7 @@ import org.w3c.dom.*;
 public class XMLDBManager {
     private XMLDBManager() {}
 
-    // 读取XML文件并返回Document对象
+    // Reads the XML file and returns the Document object
     private static Document readXML(String path) {
         try {
             File file = new File(path);
@@ -33,7 +33,7 @@ public class XMLDBManager {
         return null;
     }
     
-    // 将Document对象保存为XML文件
+    // Save the Document object as an XML file
     private static void saveXML(Document doc, String path) {
         try {
             File file = new File(path);
@@ -47,7 +47,7 @@ public class XMLDBManager {
         catch (Exception e) {}
     }
 
-    // 添加用户到XML数据库
+    // add user to XML database
     public static boolean addUser(User user) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -90,7 +90,7 @@ public class XMLDBManager {
         return true;
     }
 
-    // 查找用户
+    // find specific user
     public static User findUser(String username) {
         final String path = "../db/users.xml";
         Document doc = readXML(path); 
@@ -112,7 +112,7 @@ public class XMLDBManager {
         return null;
     }
 
-    // 获取所有用户
+    // get all users
     public static List<User> getAllUsers(Boolean sort) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -146,7 +146,7 @@ public class XMLDBManager {
         return users;
     }
 
-    // 保存用户信息到XML数据库
+    // Save user information to an XML database
     public static boolean saveUser(User user) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -172,7 +172,7 @@ public class XMLDBManager {
         return false;
     }
 
-    // 添加交易记录到XML数据库
+    // Add transaction records to the XML database
     public static void addTransaction(Transaction transaction) {
         final String path = "../db/records.xml"; 
         Document doc = readXML(path);
@@ -198,7 +198,7 @@ public class XMLDBManager {
         saveXML(doc, path);
     }
 
-    // 获取特定用户的交易记录
+    // Get the transaction history of a specific user
     public static List<Transaction> getTransactionsForUser(String uid) {
         final String path = "../db/records.xml";
         Document doc = readXML(path);
@@ -228,7 +228,7 @@ public class XMLDBManager {
         return transactions;
     }   
     
-    // 添加任务到XML数据库
+    // Add a task to an XML database
     public static Boolean addMission(Mission mission) {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -267,7 +267,7 @@ public class XMLDBManager {
         return true;
     }
     
-    // 删除任务
+    // delete the tasks list
     public static void eraseMission(String mid) {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -288,7 +288,7 @@ public class XMLDBManager {
         saveXML(doc, path);
     }
 
-    // 获取所有任务列表
+    // get missions list
     public static List<Mission> getMissionsList() {
         final String path = "../db/missions.xml";
         Document doc = readXML(path);
@@ -312,7 +312,7 @@ public class XMLDBManager {
         return missions;
     }
 
-    // 获取目标列表
+    // get targets list
     public static List<Integer> getTargets() {
         final String path = "../db/targets.xml";
         ArrayList<Integer> targets = new ArrayList<>();
@@ -332,7 +332,7 @@ public class XMLDBManager {
         return targets;
     }
 
-    // 添加定期存款到XML数据库
+    // Add time deposits to the XML database
     public static boolean addFixedDeposit(FixedDeposit deposit) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
@@ -364,7 +364,7 @@ public class XMLDBManager {
         return true;
     }
     
-    // 获取特定用户的定期存款列表
+    // Get a list of fixed deposits for specific users
     public static List<FixedDeposit> getFixedDepositsForUser(String uid) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
@@ -392,7 +392,7 @@ public class XMLDBManager {
         return deposits;
     }
 
-    // 根据UID查找用户
+    // Find a user based on UID
     public static User findUserByUid(String uid) {
         final String path = "../db/users.xml";
         Document doc = readXML(path);
@@ -414,7 +414,7 @@ public class XMLDBManager {
         return null;
     }
     
-    // 处理用户的到期定期存款
+    // Process the user's maturity time deposits
     public static void processMaturedDepositsForUser(String uid) {
         final String path = "../db/fixed_deposits.xml";
         Document doc = readXML(path);
