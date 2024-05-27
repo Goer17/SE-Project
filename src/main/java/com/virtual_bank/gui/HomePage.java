@@ -16,7 +16,7 @@ import com.virtual_bank.gui.common.CuteScrollPane;
 public class HomePage extends JPanel {
     private JPanel missionPanel;  // 任务面板
     private JPanel missionListPanel;  // 任务列表面板
-    private JPanel targetPanel;  // 目标面板
+    private JPanel targetPanel;  // 存款目标面板
 
     // 添加任务项到任务列表面板
     private void addItem(Mission mission, BaseFrame baseFrame) {
@@ -32,7 +32,7 @@ public class HomePage extends JPanel {
                 XMLDBManager.eraseMission(mission.getMid());  // 删除任务
                 String username = baseFrame.sessionManager.getUsername();
                 User user = XMLDBManager.findUser(username);
-                int money = user.getMoney() + mission.getReward();  // 更新用户金额
+                int money = user.getMoney() + mission.getReward();  // 更新用户余额
                 user.setMoney(money);
                 XMLDBManager.saveUser(user);  // 保存用户信息
 
@@ -42,13 +42,13 @@ public class HomePage extends JPanel {
                 baseFrame.refresh();  // 刷新页面
             }
         });
-        itemPanel.add(label);  // 添加描述标签
-        itemPanel.add(button);  // 添加完成按钮
+        itemPanel.add(label);  // 描述标签
+        itemPanel.add(button);  // 完成按钮
         
-        this.missionListPanel.add(itemPanel);  // 将任务项添加到任务列表面板
+        this.missionListPanel.add(itemPanel);
     }
 
-    // 初始化任务面板
+    // 任务面板初始化
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BorderLayout());
@@ -57,7 +57,7 @@ public class HomePage extends JPanel {
         JPanel missionTitlePanel = new JPanel();
         missionTitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         missionTitlePanel.add(new CuteLabel("<html><h3>Missions:</h3></html>"));
-        this.missionPanel.add(missionTitlePanel, BorderLayout.NORTH);  // 添加标题面板
+        this.missionPanel.add(missionTitlePanel, BorderLayout.NORTH);  // 添加标题
 
         JPanel missionContentPanel = new JPanel();
         missionContentPanel.setLayout(new BoxLayout(missionContentPanel, BoxLayout.Y_AXIS));
@@ -75,7 +75,7 @@ public class HomePage extends JPanel {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // 任务完成按钮的监听器代码
+                        // 任务完成事件
                         XMLDBManager.eraseMission(mission.getMid());  // 删除任务
                         String username = baseFrame.sessionManager.getUsername();
                         User user = XMLDBManager.findUser(username);
@@ -89,25 +89,25 @@ public class HomePage extends JPanel {
                         baseFrame.refresh();  // 刷新页面
                     }
                 });
-                itemPanel.add(label);  // 添加描述标签
-                itemPanel.add(button);  // 添加完成按钮
-                missionContentPanel.add(itemPanel);  // 添加任务项到内容面板
+                itemPanel.add(label);
+                itemPanel.add(button);
+                missionContentPanel.add(itemPanel);
             }
         }
 
         CuteScrollPane missionScrollPane = new CuteScrollPane(missionContentPanel);  // 包装任务内容面板
         this.missionPanel.add(missionScrollPane, BorderLayout.CENTER);
 
-        this.add(this.missionPanel, BorderLayout.EAST);  // 添加任务面板到主面板
+        this.add(this.missionPanel, BorderLayout.EAST);  // 添加到主面板
     }
 
-    // 初始化目标面板
+    // 目标面板初始化
     private void initTargetPanel(BaseFrame baseFrame) {
         this.targetPanel = new JPanel();
         this.targetPanel.setLayout(new BorderLayout());
         List<Integer> targets = XMLDBManager.getTargets();  // 获取目标列表
         String username = baseFrame.sessionManager.getUsername();
-        int money = XMLDBManager.findUser(username).getMoney();  // 获取用户当前金额
+        int money = XMLDBManager.findUser(username).getMoney();  // 获取用户金额
         DefaultListModel<String> targetModel = new DefaultListModel<>();
         int nextTarget = -1;
         for (int i = 0; i < targets.size(); i++) {
@@ -122,7 +122,7 @@ public class HomePage extends JPanel {
             }
         }
         if (nextTarget > 0) {
-            this.targetPanel.add(new JLabel("<html><h3>Progress on your next goal: " + money + "/" + nextTarget + "</h3></html>"), BorderLayout.NORTH);  // 显示下一个目标的进度
+            this.targetPanel.add(new JLabel("<html><h3>Progress on your next goal: " + money + "/" + nextTarget + "</h3></html>"), BorderLayout.NORTH);  // 下一个目标的进度
         }
         CuteList<String> targeJList = new CuteList<>(targetModel);  // 目标列表
         targeJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
