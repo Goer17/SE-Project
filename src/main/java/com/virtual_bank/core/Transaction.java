@@ -4,61 +4,61 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class Transaction {
-    private String transactionId; // 交易ID
-    private String uid; // 用户ID
-    private String type; // 类型
-    private int amount; // 金额
-    private String date; // 日期
+    private String transactionId; 
+    private String uid; 
+    private String type; 
+    private int amount; 
+    private String date; 
 
-    public Transaction(String uid, String type, int amount) { // 构造函数，传入用户ID、类型和金额
-        this.transactionId = UUID.randomUUID().toString(); // 自动生成唯一交易ID
-        this.uid = uid; // 设置用户ID
-        this.type = type; // 设置类型
-        this.amount = amount; // 设置金额
-        this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()); // 设置当前日期时间
+    public Transaction(String uid, String type, int amount) { // constructor, passing in the user ID, type, and amount
+        this.transactionId = UUID.randomUUID().toString(); // Automatically generate a unique transaction ID
+        this.uid = uid; 
+        this.type = type; 
+        this.amount = amount; 
+        this.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()); //  current date and time
     }
 
-    public Transaction(String transactionId, String uid, String type, int amount, String date) { // 构造函数，传入交易ID、用户ID、类型、金额和日期
-        this.transactionId = transactionId; // 设置交易ID
-        this.uid = uid; // 设置用户ID
-        this.type = type; // 设置类型
-        this.amount = amount; // 设置金额
-        this.date = date; // 设置日期
+    public Transaction(String transactionId, String uid, String type, int amount, String date) { // constructor with date
+        this.transactionId = transactionId; 
+        this.uid = uid;
+        this.type = type; 
+        this.amount = amount; 
+        this.date = date; 
     }    
 
-    // Getter 和 Setter 方法
-    public String getTransactionId() { // 获取交易ID
+    // Getter and Setter 
+    public String getTransactionId() { 
         return transactionId;
     }
-    public void setTransactionId(String transactionId) { // 设置交易ID
+    public void setTransactionId(String transactionId) { 
         this.transactionId = transactionId;
     }
 
-    public String getUid() { // 获取用户ID
+    public String getUid() { 
         return uid;
     }
-    public void setUid(String uid) { // 设置用户ID
+    public void setUid(String uid) { 
         this.uid = uid;
     }
 
-    public String getType() { // 获取类型
+    public String getType() { 
         return type;
     }
-    public void setType(String type) { // 设置类型
+    public void setType(String type) { 
         this.type = type;
     }
 
-    public int getAmount() { // 获取金额
+    public int getAmount() { 
         return amount;
     }
-    public void setAmount(int amount) { // 设置金额
+    public void setAmount(int amount) { 
         this.amount = amount;
     }
 
-    public String getDate() { // 获取日期
+    public String getDate() { 
         return date;
     }
-    public void setDate(String date) { // 设置日期
+    public void setDate(String date) { 
         this.date = date;
     }
 }
