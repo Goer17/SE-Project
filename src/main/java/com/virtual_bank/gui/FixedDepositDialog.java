@@ -14,91 +14,90 @@ import com.virtual_bank.core.XMLDBManager;
 import com.virtual_bank.gui.common.Button;
 import com.virtual_bank.gui.common.CuteLabel;
 import com.virtual_bank.gui.common.CuteTextField;
-// 包导入
 
 public class FixedDepositDialog extends JDialog {
-    private CuteTextField depositAmountField;  // 存款金额
-    private CuteTextField depositDurationField;  // 存款期限
-    private Button createButton;  // 创建按钮
-    private JPanel contentPanel;  // 内容面板
-    private CuteLabel headerLabel;  // 标题标签
+    private CuteTextField depositAmountField;  
+    private CuteTextField depositDurationField;  
+    private Button createButton; 
+    private JPanel contentPanel; 
+    private CuteLabel headerLabel;  
 
-    private List<ActionListener> listeners = new ArrayList<>();  // 事件列表
+    private List<ActionListener> listeners = new ArrayList<>();  // Event list
 
     public void addFixedDepositListener(ActionListener listener) {
-        listeners.add(listener);  // 定期存款事件
+        listeners.add(listener);  // Fixed deposit event
     }
 
     private void notifyFixedDepositCreated() {
         ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "FixedDepositCreated");
         for (ActionListener listener : listeners) {
-            listener.actionPerformed(event);  // 通知监听器定期存款已创建
+            listener.actionPerformed(event);  // Notify listeners that fixed deposit has been created
         }
     }
 
     public FixedDepositDialog(Frame owner, User currentUser) {
-        super(owner, "Create Fixed Deposit", true);  // 定期存款对话框
+        super(owner, "Create Fixed Deposit", true);  // Fixed deposit dialog
         setSize(700, 300);
-        setLocationRelativeTo(owner);  // 父窗口居中
-        getContentPane().setLayout(new BorderLayout(10, 10));  // 布局
+        setLocationRelativeTo(owner);  // Center on parent window
+        getContentPane().setLayout(new BorderLayout(10, 10));  // Layout
 
-        // 标题面板
-        headerLabel = new CuteLabel("New Fixed Deposit");  // 新的定期存款标题
+        // Title panel
+        headerLabel = new CuteLabel("New Fixed Deposit");  // New fixed deposit title
         getContentPane().add(headerLabel, BorderLayout.NORTH);
 
-        // 主内容面板
+        // Main content panel
         contentPanel =  new JPanel();
-        contentPanel.setLayout(new GridLayout(0, 2, 10, 5));  // 动态行，2列
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));  // 边框
+        contentPanel.setLayout(new GridLayout(0, 2, 10, 5));  
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));  
 
-        // 金额标签和字段
-        CuteLabel amountLabel = new CuteLabel("Amount:");  // 金额标签
-        depositAmountField = new CuteTextField(10);  // 金额输入字段
+        // Amount label and field
+        CuteLabel amountLabel = new CuteLabel("Amount:");  // Amount label
+        depositAmountField = new CuteTextField(10);  // Amount input field
         contentPanel.add(amountLabel);
         contentPanel.add(depositAmountField);
 
-        // 期限标签和字段
-        CuteLabel durationLabel = new CuteLabel("Duration (months):");  // 期限标签
-        depositDurationField =  new CuteTextField(10);  // 期限输入字段
+        // Duration label and field
+        CuteLabel durationLabel = new CuteLabel("Duration (months):");  // Duration label
+        depositDurationField =  new CuteTextField(10);  // Duration input field
         contentPanel.add(durationLabel);
         contentPanel.add(depositDurationField);
 
         getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-        // 按钮面板
+        // Button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        createButton = new Button("Create Deposit");  // 存款按钮
-        createButton.addActionListener(e -> createFixedDeposit(currentUser));  // 添加按钮事件
+        createButton = new Button("Create Deposit");  // Deposit button
+        createButton.addActionListener(e -> createFixedDeposit(currentUser));  // Add button event
         buttonPanel.add(createButton);
 
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);  // 关闭操作
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);  // Close operation
     }
 
     private void createFixedDeposit(User currentUser) {
         try {
-            double amount = Double.parseDouble(depositAmountField.getText());  // 获取输入金额
-            int duration = Integer.parseInt(depositDurationField.getText());  // 获取输入期限
+            double amount = Double.parseDouble(depositAmountField.getText());  // Get entered amount
+            int duration = Integer.parseInt(depositDurationField.getText());  // Get entered duration
 
             if (amount <= 0 || duration <= 0) {
                 JOptionPane.showMessageDialog(this, "Amount and duration must be positive numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);
-                return;  // 显示错误信息（金额或期限为非正数）
+                return;  // amount or duration are not positive
             }
 
-            LocalDate startDate = LocalDate.now();  // 获取当前日期作为开始日期
-            LocalDate endDate = startDate.plusMonths(duration);  // 计算结束日期
-            double annualInterestRate = 0.05;  // 固定年利率为5%
+            LocalDate startDate = LocalDate.now();  // Get current date as start date
+            LocalDate endDate = startDate.plusMonths(duration);  // Calculate end date
+            double annualInterestRate = 0.05;  // Fixed annual interest rate at 5%
 
             FixedDeposit newDeposit = new FixedDeposit(currentUser.getUid(), amount, annualInterestRate, startDate, endDate);
-            XMLDBManager.addFixedDeposit(newDeposit);  // 添加新的定期存款
+            XMLDBManager.addFixedDeposit(newDeposit);  // Add new fixed deposit into database
 
             JOptionPane.showMessageDialog(this, "Fixed Deposit Created Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            notifyFixedDepositCreated();  // 通知监听器定期存款已创建
-            dispose();  // 关闭对话框
+            notifyFixedDepositCreated();  // Notify listeners that fixed deposit has been created
+            dispose();  // Close dialog
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Please enter valid numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);  // 输入错误信息
+            JOptionPane.showMessageDialog(this, "Please enter valid numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);  // error message
         }
     }
 }
