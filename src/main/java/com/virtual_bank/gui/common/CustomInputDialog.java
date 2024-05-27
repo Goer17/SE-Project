@@ -14,49 +14,49 @@ public class CustomInputDialog extends JDialog {
         initComponents();
     }
 
-    // 初始化对话框组件
+    // initialization
     private void initComponents() {
         textField = new CuteTextField(20);
-        // 文本输入框
+        // use exsting cute textfield
         Button okButton = new Button("OK");
-        // 确认按钮
+        // use esisting button
         CuteLabel label = new CuteLabel("Please enter the amount:");
-        // 提示标签
+        // use cute label
 
-        // 确认事件，获取文本框中的内容，关闭对话框
+        // when click close the dialog
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 result = textField.getText();
-                // 获取文本框内容
+                // get the input
                 dispose();
-                // 关闭对话框
+                // close that
             }
         });
 
-        // 面板布局和边距
+        //set up a new panel
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // 输入面板，提示标签，文本输入框
+        // label at north,textfield at center
         JPanel inputPanel = new JPanel(new BorderLayout());
         inputPanel.add(label, BorderLayout.NORTH);
         inputPanel.add(textField, BorderLayout.CENTER);
 
-        // 按钮面板，确认按钮
+        // button at right(flow layout)
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(okButton);
 
-        // 添加到主面板
+        // two sub_main panel
         panel.add(inputPanel, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // 对话框内容面板，调整大小，居中显示
+        // set to the center
         setContentPane(panel);
         pack();
         setLocationRelativeTo(null);
     }
 
-    // 显示对话框，返回输入的内容
+    // back to the last dialog and return the result
     public String showDialog() {
         setVisible(true);
         return result;

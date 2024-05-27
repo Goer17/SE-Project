@@ -14,16 +14,15 @@ public class CuteLabel extends JLabel {
     public CuteLabel(String text) {
         super(text);
         setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-        // 使用"可爱"的字体
+        // use cute font
         setForeground(new Color(177, 134, 253));
-        // 设置文本颜色为浅黄色
+        // purple
         setOpaque(false);
-        // 设置为不透明，这样才能绘制自定义背景
         setBorder(new EmptyBorder(10, 20, 10, 20));
-        // 添加内边距
+        // add boder
     }
 
-    // 重写 paintComponent 方法，以支持圆角
+    // overwrite paintComponent
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
