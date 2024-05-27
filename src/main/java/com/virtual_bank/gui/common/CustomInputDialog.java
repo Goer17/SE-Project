@@ -9,21 +9,27 @@ public class CustomInputDialog extends JDialog {
     private String result;
 
     public CustomInputDialog(Frame parent, String title, boolean modal) {
+        //this is to make dialog in deposit screen more cartoon, take input from the keyboard and output as a string
         super(parent, title, modal);
         initComponents();
     }
 
     // 初始化对话框组件
     private void initComponents() {
-        textField = new CuteTextField(20); // 文本输入框
-        Button okButton = new Button("OK"); // 确认按钮
-        CuteLabel label = new CuteLabel("Please enter the amount:"); // 提示标签
+        textField = new CuteTextField(20);
+        // 文本输入框
+        Button okButton = new Button("OK");
+        // 确认按钮
+        CuteLabel label = new CuteLabel("Please enter the amount:");
+        // 提示标签
 
         // 确认事件，获取文本框中的内容，关闭对话框
         okButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                result = textField.getText(); // 获取文本框内容
-                dispose(); // 关闭对话框
+                result = textField.getText();
+                // 获取文本框内容
+                dispose();
+                // 关闭对话框
             }
         });
 
@@ -56,14 +62,5 @@ public class CustomInputDialog extends JDialog {
         return result;
     }
 
-    // 测试
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                CustomInputDialog dialog = new CustomInputDialog(null, "Custom Input Dialog", true);
-                String userInput = dialog.showDialog();
-                System.out.println("User input: " + userInput);
-            }
-        });
-    }
+
 }

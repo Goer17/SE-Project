@@ -13,13 +13,18 @@ public class CutePasswordField extends JPasswordField {
     // 密码框
     public CutePasswordField(int columns) {
         super(columns);
-        setFont(new Font("Comic Sans MS", Font.BOLD, 18));  // 字体
-        setBackground(new Color(255, 153, 0, 60));            // 背景
-        setForeground(new Color(66, 133, 244, 190));            // 前景
-        setCaretColor(new Color(255, 153, 0, 60));            // 插入符
+        setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+        // 字体
+        setBackground(new Color(255, 153, 0, 60));
+        // 背景
+        setForeground(new Color(66, 133, 244, 190));
+        // 前景
+        setCaretColor(new Color(255, 153, 0, 60));
+        // 插入符
         setOpaque(false);
         setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(5, 57, 96), 2), // 粉色边框，内边距
+                BorderFactory.createLineBorder(new Color(5, 57, 96), 2),
+                // 粉色边框，内边距
                 BorderFactory.createEmptyBorder(0, 5, 0, 5)
         ));
     }
