@@ -10,18 +10,18 @@ import java.util.List;
 import com.virtual_bank.core.*;
 import com.virtual_bank.gui.common.*;
 
-// 管理员页面类，继承自 JPanel
+// 管理员页面
 public class AdminPage extends JPanel {
     private JPanel rankPanel; // 排名面板
     private JPanel missionPanel; // 任务面板
 
-    // 初始化排名面板
+    // 排名面板
     private void initRankPanel() {
         this.rankPanel = new JPanel();
         this.rankPanel.setLayout(new BorderLayout());
         this.rankPanel.add(new CuteLabel("<html><h3>Rank</h3></html>"), BorderLayout.NORTH);
         
-        // 获取所有用户并按财富排序
+        // 排行榜
         List<User> users = XMLDBManager.getAllUsers(true);
         DefaultListModel<String> rankModel = new DefaultListModel<>();
         for (int i = 0; i < users.size(); i++) {
@@ -32,11 +32,10 @@ public class AdminPage extends JPanel {
         CuteScrollPane scrollPane = new CuteScrollPane(rankJList);
         this.rankPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // 将排名面板添加到页面的左侧
         this.add(this.rankPanel, BorderLayout.WEST);
     }
 
-    // 初始化任务面板
+    // 任务面板
     private void initMissionPanel(BaseFrame baseFrame) {
         this.missionPanel = new JPanel();
         this.missionPanel.setLayout(new BoxLayout(missionPanel, BoxLayout.Y_AXIS));
@@ -54,7 +53,7 @@ public class AdminPage extends JPanel {
         CuteScrollPane scrollPane = new CuteScrollPane(missionJList);
         this.missionPanel.add(scrollPane);
 
-        // 添加新任务的输入框和按钮
+        // 添加新任务
         JPanel addMissionBox = new JPanel();
         addMissionBox.setLayout(new BoxLayout(addMissionBox, BoxLayout.Y_AXIS));
 
@@ -70,7 +69,7 @@ public class AdminPage extends JPanel {
         missionReward.setMaximumSize(maxDimension);
         addMissionBox.add(missionReward);
 
-        // 添加任务按钮的事件监听
+        // 添加任务事件
         Button addButton = new Button("Add");
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -87,11 +86,10 @@ public class AdminPage extends JPanel {
         addMissionBox.add(addButton);
         this.missionPanel.add(addMissionBox);
 
-        // 将任务面板添加到页面的右侧
         this.add(this.missionPanel, BorderLayout.EAST);
     }
 
-    // 构造函数，初始化管理员页面
+    // 管理员页面
     public AdminPage(BaseFrame baseFrame) {
         if (baseFrame.sessionManager.isLoggedIn()) {
             if ("admin".equals(baseFrame.sessionManager.getUsername())) {
@@ -100,10 +98,10 @@ public class AdminPage extends JPanel {
                 this.initRankPanel(); // 初始化排名面板
                 this.initMissionPanel(baseFrame); // 初始化任务面板
             } else {
-                this.add(new CuteLabel("<html><h2>You have no access to this page.</h2></html>")); // 非管理员用户无权访问
+                this.add(new CuteLabel("<html><h2>You have no access to this page.</h2></html>")); // 非管理员无法访问
             }
         } else {
-            this.add(new CuteLabel("<html><h2>Please login first :)</h2></html>")); // 未登录用户提示登录
+            this.add(new CuteLabel("<html><h2>Please login first :)</h2></html>")); // 未登录用户提示
         }
     }    
 }
