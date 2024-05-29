@@ -23,7 +23,7 @@ public class Test {
 
     public static void testFixedDeposit() {
         LocalDate start = LocalDate.of(2023, 1, 1);
-        LocalDate end = LocalDate.of(2023, 12, 31);
+        LocalDate end = LocalDate.of(2024, 1, 1);
         FixedDeposit fd = new FixedDeposit("001", 10000, 0.05, start, end);
         System.out.println("FixedDeposit Interest (should be around 500): " + fd.calculateInterest());
         System.out.println("FixedDeposit Maturity Amount (should be around 10500): " + fd.calculateMaturityAmount());
